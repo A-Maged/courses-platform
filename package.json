@@ -1,0 +1,38 @@
+{
+    "private": true,
+    "scripts": {
+        "dev": "npm run development",
+        "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=webpack.config.js",
+        "watch": "npm run development -- --watch",
+        "watch-poll": "npm run watch -- --watch-poll",
+        "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=webpack.config.js",
+        "prod": "npm run production",
+        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=webpack.config.js"
+    },
+    "devDependencies": {
+        "axios": "^0.18",
+        "babel-core": "^6.26.3",
+        "babel-loader": "^7.1.5",
+        "babel-plugin-transform-class-properties": "^6.24.1",
+        "babel-plugin-transform-object-rest-spread": "^6.26.0",
+        "babel-preset-env": "^1.7.0",
+        "babel-preset-react": "^6.23.0",
+        "bootstrap": "^4.0.0",
+        "cross-env": "^5.1",
+        "css-loader": "^1.0.0",
+        "extract-text-webpack-plugin": "^3.0.2",
+        "laravel-mix": "^2.0",
+        "lodash": "^4.17.5",
+        "node-sass": "^4.9.3",
+        "react": "^16.2.0",
+        "react-dom": "^16.2.0",
+        "react-redux": "^5.0.7",
+        "react-router-dom": "^4.3.1",
+        "redux": "^4.0.0",
+        "redux-thunk": "^2.3.0",
+        "resolve-url-loader": "^2.3.0",
+        "sass-loader": "^7.1.0",
+        "style-loader": "^0.23.0"
+    },
+    "dependencies": {}
+}

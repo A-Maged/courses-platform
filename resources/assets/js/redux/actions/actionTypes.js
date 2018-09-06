@@ -1,0 +1,5 @@
+export const AUTH_FORM_EDIT = '[ AUTH ] EDIT';
+export const AUTH_FORM_UPDATE_REMEMBER_ME = '[ AUTH ] UPDATE_REMEMBER_ME';
+
+export const CREATE_COURSE__FORM_EDIT = '[ COURSE ] EDIT';
+export const GET_ALL_COURSES = '[ COURSE ] GET_ALL_COURSES';
