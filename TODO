@@ -3,20 +3,20 @@ FRONT-END:
 ---------
 
 validate data with npm package
-add redux and flash messeges	
-
-
-
-BACK-END:
----------
-
+add flash messeges	
 ui loading until data is present 
-
 authintication
+
 
 login:
 	- don't display login if user is logged in
 	  check with the server to make sure he is really logged in and your not locking him out
+
+
+----------------------------------------------------------------
+
+BACK-END:
+---------
 
 error:
 	1- validate request data  
@@ -27,6 +27,5 @@ implement reset passsword
 set  APP_DEBUG to false in .env
 
 ----------------------------------------------------------------
-complete:
-	logout
+
 

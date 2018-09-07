@@ -21,6 +21,7 @@ class CoursesController extends Controller
      */
     public function index()
     {
+        //  NOTE: add pagination
         return response()->json([
             'status' => 'success',
             'data' => Course::all(),
@@ -48,7 +49,6 @@ class CoursesController extends Controller
             'slug' => str_slug($request->title),
         ]);
 
-        // NOTE:  if successfull send success
         $course->save();
 
         return response()->json([
@@ -83,6 +83,7 @@ class CoursesController extends Controller
      */
     public function update(Request $request, $id)
     {
+
     }
 
     /**
@@ -93,5 +94,12 @@ class CoursesController extends Controller
      */
     public function destroy($id)
     {
+        $course = Course::find($id);
+        $course->forceDelete();
+
+        return response()->json([
+            'status' => 'success',
+            'msg' => 'course deleted permanently',
+        ]);
     }
 }
