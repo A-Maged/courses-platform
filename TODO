@@ -14,6 +14,9 @@ FRONT-END:
 
 authintication / add private routes
 
+fix: user object in redux store gets deleted
+
+
 validate data with npm package
 add flash messeges	
 ui loading until data is present 

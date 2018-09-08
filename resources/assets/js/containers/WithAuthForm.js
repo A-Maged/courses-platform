@@ -24,12 +24,8 @@ const mapStateToProps = state => {
 const mapDispatchToprops = dispatch => {
   return {
     nameChanged: e => dispatch(actionCreators.authFormEdit({ name: e.target.value })),
-
     emailChanged: e => dispatch(actionCreators.authFormEdit({ email: e.target.value })),
-
-    passwordChanged: e =>
-      dispatch(actionCreators.authFormEdit({ password: e.target.value })),
-
+    passwordChanged: e => dispatch(actionCreators.authFormEdit({ password: e.target.value })),
     rememberMeChanged: e => dispatch(actionCreators.authFormUpdateRememberMe()),
 
     login: () => dispatch(actionCreators.login()),

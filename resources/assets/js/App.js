@@ -6,15 +6,15 @@ import Nav from './components/Nav';
 import Routes from './Routes';
 
 class App extends Component {
-    render() {
-        return (
-            <Router history={history}>
-                <React.Fragment>
-                    <Nav />
-                    <Routes />
-                </React.Fragment>
-            </Router>
-        );
-    }
+  render() {
+    return (
+      <Router history={history}>
+        <React.Fragment>
+          <Nav />
+          <Routes />
+        </React.Fragment>
+      </Router>
+    );
+  }
 }
 export default App;

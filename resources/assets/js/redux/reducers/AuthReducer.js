@@ -24,12 +24,6 @@ const AuthReducer = (state = initialState, action) => {
         rememberMe: !state.rememberMe
       };
 
-    case actionTypes.IS_AUTHENTICATED:
-      return {
-        ...state,
-        isAuthenticated: isAuthenticated
-      };
-
     case actionTypes.AUTH_LOGIN_REQUEST:
       return {
         ...state

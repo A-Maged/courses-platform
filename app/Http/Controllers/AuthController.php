@@ -13,16 +13,30 @@ class AuthController extends Controller
 
     public function isAuthenticated()
     {
-        $status = Auth::check() ? 'success' : 'failed';
+        if (Auth::check()) {
+            return response()->json([
+                'status' => 'success',
+                'msg' => 'logged in',
+                'data' => Auth::user()->only(['id', 'name', 'email']),
+            ]);
+        }
 
         return response()->json([
-            'status' => $status,
+            'status' => 'failed',
+            'msg' => 'you are not logged in',
         ]);
     }
 
     public function register()
     {
         // NOTE: do validation here
+
+        if (Auth::check()) {
+            return response()->json([
+                'status' => 'failed',
+                'msg' => 'already registered',
+            ]);
+        }
 
         $newUser = new User([
             'name' => request()->name,
@@ -31,6 +45,8 @@ class AuthController extends Controller
         ]);
 
         $newUser->save();
+
+        Auth::login($newUser);
 
         return response()->json([
             'status' => 'success',
