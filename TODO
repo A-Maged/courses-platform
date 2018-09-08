@@ -1,11 +1,22 @@
+pages:
+	create course form
+	uploade/create video form
+
+	list all courses
+	show one course and list it's videos 
+	show one video
+
+
+
 ---------
 FRONT-END:
 ---------
 
+authintication / add private routes
+
 validate data with npm package
 add flash messeges	
 ui loading until data is present 
-authintication
 
 
 login:
@@ -17,6 +28,9 @@ login:
 
 BACK-END:
 ---------
+
+add an image field to the courses table
+
 
 error:
 	1- validate request data  

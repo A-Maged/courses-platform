@@ -61,13 +61,13 @@ class Login extends Component {
                             <button type="submit" className="btn btn-primary">
                                 submit
                             </button>
-                            <Link
-                                to={namedRoutes('auth.password.request')}
+                            {/* <Link
+                                to={namedRoutes('server.auth.password.request')}
                                 className=" btn-link"
                             >
                                 {` `}
                                 Forgot Your Password
-                            </Link>
+                            </Link> */}
                         </div>
                     </div>
                 </form>
@@ -77,22 +77,7 @@ class Login extends Component {
 
     handleSubmit = e => {
         e.preventDefault();
-        var self = this;
-
-        axios
-            .post(namedRoutes('auth.login'), {
-                email: this.props.email,
-                password: this.props.password,
-                remember: this.props.rememberMe
-            })
-            .then(function(response) {
-                console.log(response.data);
-                // redirect
-                self.props.history.push(namedRoutes('app.root'));
-            })
-            .catch(function(error) {
-                console.log(error);
-            });
+        this.props.login();
     };
 }
 

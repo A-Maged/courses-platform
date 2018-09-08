@@ -10,10 +10,6 @@ class Register extends Component {
     render() {
         return (
             <Card header="register">
-                {this.props.redirect && (
-                    <Redirect to={namedRoutes('app.root')} />
-                )}
-
                 <form onSubmit={this.handleSubmit} method="POST">
                     <div className="form-group row justify-content-center">
                         <div className="col-md-6">
@@ -69,24 +65,7 @@ class Register extends Component {
 
     handleSubmit = e => {
         e.preventDefault();
-        var self = this;
-
-        //  submit form to namedRoutes('auth.login')
-        axios
-            .post(namedRoutes('auth.register'), {
-                name: this.props.name,
-                email: this.props.email,
-                password: this.props.password
-            })
-            .then(function(response) {
-                console.log(response.data);
-                // redirect
-                self.props.history.push(namedRoutes('app.root'));
-            })
-            .catch(function(error) {
-                // NOTE: show error on the same page
-                console.log(error);
-            });
+        this.props.register();
     };
 }
 

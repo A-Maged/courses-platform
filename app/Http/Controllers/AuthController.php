@@ -11,6 +11,15 @@ class AuthController extends Controller
     //  public function __construct()
     //  {}
 
+    public function isAuthenticated()
+    {
+        $status = Auth::check() ? 'success' : 'failed';
+
+        return response()->json([
+            'status' => $status,
+        ]);
+    }
+
     public function register()
     {
         // NOTE: do validation here
@@ -21,9 +30,13 @@ class AuthController extends Controller
             'password' => Hash::make(request()->password),
         ]);
 
-        // NOTE:  if successfull send success
         $newUser->save();
 
+        return response()->json([
+            'status' => 'success',
+            'msg' => 'user is registered',
+            'data' => $newUser->only(['id', 'name', 'email']),
+        ]);
     }
 
     public function login()
