@@ -3,7 +3,7 @@ import { Router } from 'react-router-dom';
 import history from './redux/history';
 
 import Nav from './components/Nav';
-import Routes from './Routes';
+import Routes from './routing/Routes';
 
 class App extends Component {
   render() {

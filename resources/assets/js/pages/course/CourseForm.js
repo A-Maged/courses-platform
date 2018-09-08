@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
-import { namedRoutes } from '../../Routes';
+import namedRoutes from '../../routing/namedRoutes';
 import WithCourse from '../../containers/WithCourse';
 import Card from '../../components/Card';
 

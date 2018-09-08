@@ -1,11 +1,11 @@
 import * as actionTypes from '../actions/actionTypes';
 import axios from 'axios';
 
-import { namedRoutes } from '../../Routes';
+import namedRoutes from '../../routing/namedRoutes';
 
 export const register = ({ getState, dispatch }) => next => action => {
   if (action.type === actionTypes.AUTH_REGISTER_REQUEST) {
-    let { name, email, password } = getState().authForm;
+    let { name, email, password } = getState().auth;
 
     axios
       .post(namedRoutes('server.auth.register'), { name, email, password })
@@ -29,7 +29,7 @@ export const register = ({ getState, dispatch }) => next => action => {
 
 export const login = ({ getState, dispatch }) => next => action => {
   if (action.type === actionTypes.AUTH_LOGIN_REQUEST) {
-    let { email, password, rememberMe } = getState().authForm;
+    let { email, password, rememberMe } = getState().auth;
 
     axios
       .post(namedRoutes('server.auth.login'), {

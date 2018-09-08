@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-import { namedRoutes } from '../../Routes';
+import namedRoutes from '../../routing/namedRoutes';
 import WithCourse from '../../containers/WithCourse';
 import store from '../../redux/store';
 

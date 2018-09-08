@@ -14,10 +14,10 @@ const WithAuthForm = WrapedComponent => {
 
 const mapStateToProps = state => {
   return {
-    email: state.authForm.email,
-    password: state.authForm.password,
-    name: state.authForm.name,
-    rememberMe: state.authForm.rememberMe
+    email: state.auth.email,
+    password: state.auth.password,
+    name: state.auth.name,
+    rememberMe: state.auth.rememberMe
   };
 };
 
@@ -25,7 +25,8 @@ const mapDispatchToprops = dispatch => {
   return {
     nameChanged: e => dispatch(actionCreators.authFormEdit({ name: e.target.value })),
     emailChanged: e => dispatch(actionCreators.authFormEdit({ email: e.target.value })),
-    passwordChanged: e => dispatch(actionCreators.authFormEdit({ password: e.target.value })),
+    passwordChanged: e =>
+      dispatch(actionCreators.authFormEdit({ password: e.target.value })),
     rememberMeChanged: e => dispatch(actionCreators.authFormUpdateRememberMe()),
 
     login: () => dispatch(actionCreators.login()),

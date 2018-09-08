@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import * as actionTypes from './actionTypes';
-import { namedRoutes } from '../../Routes';
+import namedRoutes from '../../routing/namedRoutes';
 
 export const authFormEdit = payload => {
   return {

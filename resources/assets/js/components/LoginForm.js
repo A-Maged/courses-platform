@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import WithAuthForm from '../containers/WithAuthForm';
-import { namedRoutes } from '../Routes';
+import namedRoutes from '../routing/namedRoutes';
 import Card from './Card';
 
 const LoginForm = props => {

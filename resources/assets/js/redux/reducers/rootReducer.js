@@ -5,9 +5,9 @@ import UiReducer from './UiReducer';
 import CourseReducer from './CourseReducer';
 
 const rootReducer = combineReducers({
-    authForm: AuthReducer,
-    ui: UiReducer,
-    course: CourseReducer
+  auth: AuthReducer,
+  ui: UiReducer,
+  course: CourseReducer
 });
 
 export default rootReducer;
