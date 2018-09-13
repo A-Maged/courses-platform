@@ -15,11 +15,19 @@ const namedRoutes = (key, term) => {
       },
       courses: {
         index: '/app/courses',
+        show: `/app/courses/${id}`,
         create: '/app/courses/create',
         edit: `/app/courses/${id}/edit`
+      },
+
+      videos: {
+        create: '/app/videos/create',
+        edit: `/app/videos/${id}/edit`
       }
     },
+
     //   ***************************************
+
     server: {
       auth: {
         is_authenticated: '/is_authenticated',
@@ -39,6 +47,13 @@ const namedRoutes = (key, term) => {
         show: `/courses/${id}`,
         update: `/courses/${id}`,
         destroy: `/courses/${id}`
+      },
+
+      videos: {
+        store: '/videos',
+        show: `/videos/${id}`,
+        update: `/videos/${id}`,
+        destroy: `/videos/${id}`
       }
     }
   };

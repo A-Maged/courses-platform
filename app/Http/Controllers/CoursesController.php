@@ -22,10 +22,12 @@ class CoursesController extends Controller
     public function index()
     {
         //  NOTE: add pagination
+        $courses = Course::all();
         return response()->json([
             'status' => 'success',
-            'data' => Course::all(),
+            'data' => $courses,
         ]);
+
     }
 
     /**

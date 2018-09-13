@@ -7,6 +7,7 @@ import Login from '../pages/auth/Login';
 import Register from '../pages/auth/Register';
 import Logout from '../pages/auth/Logout';
 import CourseForm from '../pages/course/CourseForm';
+import VideoForm from '../pages/video/VideoForm';
 import AllCourses from '../pages/course/AllCourses';
 
 class Routes extends Component {
@@ -27,6 +28,8 @@ class Routes extends Component {
 
           <Route path={namedRoutes('app.courses.create')} component={CourseForm} />
           <Route exact path={namedRoutes('app.courses.index')} component={AllCourses} />
+
+          <Route path={namedRoutes('app.videos.create')} component={VideoForm} />
 
           <Route component={() => <h1> no match </h1>} />
         </Switch>

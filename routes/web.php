@@ -12,5 +12,8 @@ Route::get('/is_authenticated', 'AuthController@isAuthenticated')->name('auth.is
 // courses
 Route::resource('/courses', 'CoursesController')->except(['create', 'edit']);
 
+// videos
+Route::resource('/videos', 'VideosController')->except(['index', 'create', 'edit']);
+
 // serve react index.html
 Route::fallback(function () {return view('SPA');});
