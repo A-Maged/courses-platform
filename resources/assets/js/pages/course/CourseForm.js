@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
-import axios from 'axios';
+import { Field, reduxForm } from 'redux-form';
 
-import namedRoutes from '../../routing/namedRoutes';
 import WithCourse from '../../containers/WithCourse';
 import Card from '../../components/Card';
 
@@ -13,9 +11,8 @@ class CourseForm extends Component {
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
             <label htmlFor="courseTitle">title</label>
-            <input
-              onChange={this.props.updateTitle}
-              value={this.props.title}
+            <Field
+              component="input"
               name="title"
               placeholder="title"
               className="form-control"
@@ -25,9 +22,8 @@ class CourseForm extends Component {
 
           <div className="form-group">
             <label htmlFor="courseDescription">description</label>
-            <textarea
-              onChange={this.props.updateDescription}
-              value={this.props.description}
+            <Field
+              component="textarea"
               name="description"
               className="form-control"
               placeholder="description"
@@ -38,15 +34,10 @@ class CourseForm extends Component {
 
           <div className="form-group">
             <label htmlFor="publishedStatus">published status</label>
-            <select
-              onChange={this.props.updatePublishedStatus}
-              value={this.props.publishedStatus}
-              className="form-control"
-              name="publishedStatus"
-            >
+            <Field component="select" className="form-control" name="publishedStatus">
               <option value="draft">draft</option>
               <option value="published">published</option>
-            </select>
+            </Field>
           </div>
 
           <button type="submit" className="btn btn-primary">
@@ -63,5 +54,13 @@ class CourseForm extends Component {
     this.props.createCourse();
   };
 }
+
+CourseForm = reduxForm({
+  // a unique name for the form
+  form: 'courseForm',
+  initialValues: {
+    publishedStatus: 'draft'
+  }
+})(CourseForm);
 
 export default WithCourse(CourseForm);

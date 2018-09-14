@@ -6,15 +6,6 @@ use Illuminate\Http\Request;
 
 class VideosController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    //  public function index()
-    //  {
-    //      //
-    //  }
 
     /**
      * Store a newly created resource in storage.
@@ -24,7 +15,19 @@ class VideosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //  NOTE: validate request here
+
+        $videoPath = storage_path() . '/uploads/';
+        $fileName = str_slug($request->title) . '.mp4';
+
+        request()->file('video_file')->move($videoPath, $fileName);
+
+        // NOTE:  dispatch an event to uploade to s3
+
+        return response()->json([
+            'status' => 'success',
+            'msg' => 'video uploaded successfully',
+        ]);
     }
 
     /**

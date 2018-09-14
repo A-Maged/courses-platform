@@ -1,30 +1,20 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-    title: '',
-    description: '',
-    publishedStatus: 'draft',
-    allCourses: []
+  allCourses: []
 };
 
 const CourseReducer = (state = initialState, action) => {
-    switch (action.type) {
-        //  using payload based actions
-        case actionTypes.CREATE_COURSE__FORM_EDIT:
-            return {
-                ...state,
-                ...action.payload
-            };
+  switch (action.type) {
+    case actionTypes.GET_ALL_COURSES:
+      return {
+        ...state,
+        allCourses: action.allCourses
+      };
 
-        case actionTypes.GET_ALL_COURSES:
-            return {
-                ...state,
-                allCourses: action.allCourses
-            };
-
-        default:
-            return state;
-    }
+    default:
+      return state;
+  }
 };
 
 export default CourseReducer;

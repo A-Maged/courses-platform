@@ -69,7 +69,7 @@ export const getAllCourses = () => {
 
 export const createCourse = () => {
   return (dispatch, getState) => {
-    let { title, description, publishedStatus } = getState().course;
+    let { title, description, publishedStatus } = getState().form.courseForm.values;
 
     axios
       .post(namedRoutes('server.courses.store'), {
@@ -84,5 +84,19 @@ export const createCourse = () => {
           redirectTo: namedRoutes('app.courses.index')
         });
       });
+  };
+};
+
+export const createVideo = (data, fileSelector) => {
+  let formData = new FormData();
+
+  formData.append('title', data.title);
+  formData.append('description', data.description);
+  formData.append('video_file', document.querySelector(fileSelector).files[0]);
+
+  return (dispatch, getState) => {
+    axios.post(namedRoutes('server.videos.store'), formData).then(response => {
+      console.log(response.data);
+    });
   };
 };
