@@ -14,6 +14,11 @@ export const boundRedirect = (path, intendedUrl = null) => {
   //   };
 };
 
+export const toggleLoading = value => ({
+  type: actionTypes.LOADING,
+  value
+});
+
 export const authFormEdit = payload => {
   return {
     type: actionTypes.AUTH_FORM_EDIT,
@@ -40,10 +45,10 @@ export const isAuthenticated = () => {
           isAuthenticated: true
         });
       } else {
-        dispatch({
-          type: actionTypes.AUTH_LOGOUT_REQUEST
-        });
+        dispatch(logout());
       }
+
+      dispatch(toggleLoading(false));
     });
   };
 };

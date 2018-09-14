@@ -1,4 +1,5 @@
 export const REDIRECT = '[ UI ] REDIRECT';
+export const LOADING = '[ UI ] LOADING';
 
 export const AUTH_FORM_EDIT = '[ AUTH ] EDIT';
 export const AUTH_FORM_UPDATE_REMEMBER_ME = '[ AUTH ] UPDATE_REMEMBER_ME';

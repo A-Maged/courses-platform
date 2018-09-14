@@ -1779,6 +1779,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var REDIRECT = exports.REDIRECT = '[ UI ] REDIRECT';
+var LOADING = exports.LOADING = '[ UI ] LOADING';
 
 var AUTH_FORM_EDIT = exports.AUTH_FORM_EDIT = '[ AUTH ] EDIT';
 var AUTH_FORM_UPDATE_REMEMBER_ME = exports.AUTH_FORM_UPDATE_REMEMBER_ME = '[ AUTH ] UPDATE_REMEMBER_ME';
@@ -2381,7 +2382,7 @@ var createPath = function createPath(location) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.createVideo = exports.createCourse = exports.getAllCourses = exports.logout = exports.login = exports.register = exports.isAuthenticated = exports.authFormUpdateRememberMe = exports.authFormEdit = exports.boundRedirect = undefined;
+exports.createVideo = exports.createCourse = exports.getAllCourses = exports.logout = exports.login = exports.register = exports.isAuthenticated = exports.authFormUpdateRememberMe = exports.authFormEdit = exports.toggleLoading = exports.boundRedirect = undefined;
 
 var _axios = __webpack_require__(33);
 
@@ -2413,6 +2414,13 @@ var boundRedirect = exports.boundRedirect = function boundRedirect(path) {
   //   };
 };
 
+var toggleLoading = exports.toggleLoading = function toggleLoading(value) {
+  return {
+    type: actionTypes.LOADING,
+    value: value
+  };
+};
+
 var authFormEdit = exports.authFormEdit = function authFormEdit(payload) {
   return {
     type: actionTypes.AUTH_FORM_EDIT,
@@ -2439,10 +2447,10 @@ var isAuthenticated = exports.isAuthenticated = function isAuthenticated() {
           isAuthenticated: true
         });
       } else {
-        dispatch({
-          type: actionTypes.AUTH_LOGOUT_REQUEST
-        });
+        dispatch(logout());
       }
+
+      dispatch(toggleLoading(false));
     });
   };
 };
@@ -38430,7 +38438,7 @@ exports.default = AuthReducer;
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -38442,23 +38450,29 @@ var actionTypes = _interopRequireWildcard(_actionTypes);
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 var initialState = {
-    redirectTo: '',
-    errors: []
+  loading: false,
+  redirectTo: '',
+  errors: []
 };
 
 var UiReducer = function UiReducer() {
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
-    var action = arguments[1];
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+  var action = arguments[1];
 
-    switch (action.type) {
-        case actionTypes.REDIRECT:
-            return _extends({}, state, {
-                redirectTo: action.to
-            });
+  switch (action.type) {
+    case actionTypes.REDIRECT:
+      return _extends({}, state, {
+        redirectTo: action.to
+      });
 
-        default:
-            return state;
-    }
+    case actionTypes.LOADING:
+      return _extends({}, state, {
+        loading: action.value || !state.loading
+      });
+
+    default:
+      return state;
+  }
 };
 
 exports.default = UiReducer;
@@ -40443,6 +40457,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(15);
 
+var _reactRedux = __webpack_require__(7);
+
 var _history = __webpack_require__(125);
 
 var _history2 = _interopRequireDefault(_history);
@@ -40451,6 +40467,10 @@ var _store = __webpack_require__(22);
 
 var _actionCreators = __webpack_require__(29);
 
+var _LoadingScreen = __webpack_require__(394);
+
+var _LoadingScreen2 = _interopRequireDefault(_LoadingScreen);
+
 var _Nav = __webpack_require__(379);
 
 var _Nav2 = _interopRequireDefault(_Nav);
@@ -40458,6 +40478,8 @@ var _Nav2 = _interopRequireDefault(_Nav);
 var _Routes = __webpack_require__(380);
 
 var _Routes2 = _interopRequireDefault(_Routes);
+
+var _actionTypes = __webpack_require__(18);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -40479,7 +40501,10 @@ var App = function (_Component) {
   _createClass(App, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      (0, _store.dispatch)((0, _actionCreators.isAuthenticated)());
+      if (!this.props.isAuthenticated) {
+        (0, _store.dispatch)((0, _actionCreators.toggleLoading)());
+        (0, _store.dispatch)((0, _actionCreators.isAuthenticated)());
+      }
     }
   }, {
     key: 'render',
@@ -40491,6 +40516,7 @@ var App = function (_Component) {
           _react2.default.Fragment,
           null,
           _react2.default.createElement(_Nav2.default, null),
+          this.props.loading && _react2.default.createElement(_LoadingScreen2.default, null),
           _react2.default.createElement(_Routes2.default, null)
         )
       );
@@ -40500,7 +40526,12 @@ var App = function (_Component) {
   return App;
 }(_react.Component);
 
-exports.default = App;
+exports.default = (0, _reactRedux.connect)(function (state) {
+  return {
+    isAuthenticated: state.auth.isAuthenticated,
+    loading: state.ui.loading
+  };
+})(App);
 
 /***/ }),
 /* 379 */
@@ -40601,9 +40632,9 @@ var _PrivateRoute = __webpack_require__(381);
 
 var _PrivateRoute2 = _interopRequireDefault(_PrivateRoute);
 
-var _store = __webpack_require__(22);
+var _LoadingScreen = __webpack_require__(394);
 
-var _store2 = _interopRequireDefault(_store);
+var _LoadingScreen2 = _interopRequireDefault(_LoadingScreen);
 
 var _Login = __webpack_require__(382);
 
@@ -41638,6 +41669,84 @@ exports.default = (0, _redux.compose)((0, _reactRedux.connect)(mapStateToProps, 
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 392 */,
+/* 393 */,
+/* 394 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(136);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _reactRedux = __webpack_require__(7);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var LoadingScreen = function (_Component) {
+  _inherits(LoadingScreen, _Component);
+
+  function LoadingScreen(props) {
+    _classCallCheck(this, LoadingScreen);
+
+    var _this = _possibleConstructorReturn(this, (LoadingScreen.__proto__ || Object.getPrototypeOf(LoadingScreen)).call(this, props));
+
+    _this.overlayNode = document.createElement('div');
+    _this.overlayNode.setAttribute('id', 'loading-screen-overlay');
+    return _this;
+  }
+
+  _createClass(LoadingScreen, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      // add overlay div at the end of <body>
+      document.body.appendChild(this.overlayNode);
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      // remove overlay div from the dom
+      document.body.removeChild(this.overlayNode);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _reactDom2.default.createPortal(_react2.default.createElement(
+        'h1',
+        null,
+        'loading'
+      ), this.overlayNode);
+    }
+  }]);
+
+  return LoadingScreen;
+}(_react.Component);
+
+exports.default = (0, _reactRedux.connect)(function (state) {
+  return {
+    loading: state.ui.loading
+  };
+})(LoadingScreen);
 
 /***/ })
 /******/ ]);

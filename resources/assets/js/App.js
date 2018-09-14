@@ -1,15 +1,22 @@
 import React, { Component } from 'react';
 import { Router } from 'react-router-dom';
-import history from './redux/history';
+import { connect } from 'react-redux';
 
+import history from './redux/history';
 import { dispatch } from './redux/store';
-import { isAuthenticated } from './redux/actions/actionCreators';
+import { toggleLoading, isAuthenticated } from './redux/actions/actionCreators';
+
+import LoadingScreen from './components/LoadingScreen';
 import Nav from './components/Nav';
 import Routes from './routing/Routes';
+import { LOADING } from './redux/actions/actionTypes';
 
 class App extends Component {
   componentDidMount() {
-    dispatch(isAuthenticated());
+    if (!this.props.isAuthenticated) {
+      dispatch(toggleLoading());
+      dispatch(isAuthenticated());
+    }
   }
 
   render() {
@@ -17,10 +24,14 @@ class App extends Component {
       <Router history={history}>
         <React.Fragment>
           <Nav />
+          {this.props.loading && <LoadingScreen />}
           <Routes />
         </React.Fragment>
       </Router>
     );
   }
 }
-export default App;
+export default connect(state => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  loading: state.ui.loading
+}))(App);

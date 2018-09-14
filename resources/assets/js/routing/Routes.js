@@ -3,7 +3,8 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 
 import namedRoutes from './namedRoutes';
 import PrivateRoute from './PrivateRoute';
-import store from '../redux/store';
+
+import LoadingScreen from '../components/LoadingScreen';
 import Login from '../pages/auth/Login';
 import Register from '../pages/auth/Register';
 import Logout from '../pages/auth/Logout';
@@ -15,6 +16,8 @@ class Routes extends Component {
   render() {
     return (
       <React.Fragment>
+        {/* <Route component={LoadingScreen} /> */}
+
         <Switch>
           <PrivateRoute path="/app/protected" component={() => <h2>protected</h2>} />
 
