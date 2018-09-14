@@ -40525,43 +40525,48 @@ var _namedRoutes2 = _interopRequireDefault(_namedRoutes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var navStyle = {
+  fontWeight: 'bold',
+  backgroundColor: '#444'
+};
+
 var Nav = function Nav() {
   return _react2.default.createElement(
     'nav',
     { className: 'nav' },
     _react2.default.createElement(
       _reactRouterDom.NavLink,
-      { to: '/app/protected' },
+      { activeStyle: navStyle, to: '/app/protected' },
       'protected'
     ),
     _react2.default.createElement(
       _reactRouterDom.NavLink,
-      { to: (0, _namedRoutes2.default)('app.videos.create') },
+      { activeStyle: navStyle, to: (0, _namedRoutes2.default)('app.videos.create') },
       'create video'
     ),
     _react2.default.createElement(
       _reactRouterDom.NavLink,
-      { to: (0, _namedRoutes2.default)('app.courses.index') },
+      { activeStyle: navStyle, to: (0, _namedRoutes2.default)('app.courses.index') },
       'all course'
     ),
     _react2.default.createElement(
       _reactRouterDom.NavLink,
-      { to: (0, _namedRoutes2.default)('app.courses.create') },
+      { activeStyle: navStyle, to: (0, _namedRoutes2.default)('app.courses.create') },
       'create course'
     ),
     _react2.default.createElement(
       _reactRouterDom.NavLink,
-      { to: (0, _namedRoutes2.default)('app.auth.register') },
+      { activeStyle: navStyle, to: (0, _namedRoutes2.default)('app.auth.register') },
       'register'
     ),
     _react2.default.createElement(
       _reactRouterDom.NavLink,
-      { to: (0, _namedRoutes2.default)('app.auth.login') },
+      { activeStyle: navStyle, to: (0, _namedRoutes2.default)('app.auth.login') },
       'login'
     ),
     _react2.default.createElement(
       _reactRouterDom.NavLink,
-      { to: (0, _namedRoutes2.default)('app.auth.logout') },
+      { activeStyle: navStyle, to: (0, _namedRoutes2.default)('app.auth.logout') },
       'logout'
     )
   );
