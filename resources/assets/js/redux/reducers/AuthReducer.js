@@ -24,11 +24,6 @@ const AuthReducer = (state = initialState, action) => {
         rememberMe: !state.rememberMe
       };
 
-    case actionTypes.AUTH_LOGIN_REQUEST:
-      return {
-        ...state
-      };
-
     case actionTypes.AUTH_LOGOUT_REQUEST:
       return {
         ...state,

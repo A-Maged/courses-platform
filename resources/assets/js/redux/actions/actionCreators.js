@@ -1,7 +1,18 @@
 import axios from 'axios';
 
 import * as actionTypes from './actionTypes';
+import { dispatch } from '../store';
 import namedRoutes from '../../routing/namedRoutes';
+
+export const boundRedirect = (path, intendedUrl = null) => {
+  //   return dispatch => {
+  dispatch({
+    type: actionTypes.REDIRECT,
+    redirectTo: namedRoutes(path),
+    intendedUrl
+  });
+  //   };
+};
 
 export const authFormEdit = payload => {
   return {
@@ -37,21 +48,71 @@ export const isAuthenticated = () => {
   };
 };
 
-export const register = () => ({
-  type: actionTypes.AUTH_REGISTER_REQUEST
-});
+export const register = () => {
+  return (dispatch, getState) => {
+    let { name, email, password } = getState().auth;
 
-export const login = () => ({
-  type: actionTypes.AUTH_LOGIN_REQUEST
-});
+    axios
+      .post(namedRoutes('server.auth.register'), { name, email, password })
+      .then(function(response) {
+        dispatch({
+          type: actionTypes.AUTH_REQUEST_SUCCESS,
+          user: response.data.data,
+          isAuthenticated: true
+        });
 
-export const logout = () => ({
-  type: actionTypes.AUTH_LOGOUT_REQUEST
-});
+        // redirect
+        boundRedirect('app.root');
+      });
+  };
+};
+
+export const login = () => {
+  return (dispatch, getState) => {
+    let { email, password, rememberMe } = getState().auth;
+
+    axios
+      .post(namedRoutes('server.auth.login'), {
+        email: email,
+        password: password,
+        remember: rememberMe
+      })
+      .then(function(response) {
+        dispatch({
+          type: actionTypes.AUTH_REQUEST_SUCCESS,
+          user: response.data.data,
+          isAuthenticated: true
+        });
+
+        // redirect
+        dispatch({
+          type: actionTypes.REDIRECT,
+          redirectTo: namedRoutes('app.root')
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+};
+
+export const logout = () => {
+  return (dispatch, getState) => {
+    axios.post(namedRoutes('server.auth.logout'), {}).then(function(response) {
+      dispatch({
+        type: actionTypes.AUTH_LOGOUT_REQUEST
+      });
+
+      boundRedirect('app.auth.login');
+    });
+  };
+};
 
 export const getAllCourses = () => {
   return dispatch => {
-    axios.get(namedRoutes('server.courses.index')).then(response => {
+    let url = namedRoutes('server.courses.index');
+
+    axios.get(url).then(response => {
       dispatch({
         type: actionTypes.GET_ALL_COURSES,
         allCourses: response.data.data
@@ -89,6 +150,11 @@ export const createVideo = (data, fileSelector) => {
   return (dispatch, getState) => {
     axios.post(namedRoutes('server.videos.store'), formData).then(response => {
       console.log(response.data);
+      // redirect
+      dispatch({
+        type: actionTypes.REDIRECT,
+        redirectTo: namedRoutes('app.courses.index')
+      });
     });
   };
 };

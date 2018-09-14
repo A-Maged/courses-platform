@@ -17,7 +17,9 @@ const mapStateToProps = state => {
     email: state.auth.email,
     password: state.auth.password,
     name: state.auth.name,
-    rememberMe: state.auth.rememberMe
+    rememberMe: state.auth.rememberMe,
+    isAuthenticated: state.auth.isAuthenticated,
+    user: state.auth.user
   };
 };
 

@@ -7,7 +7,7 @@ import Card from '../../components/Card';
 
 class CourseForm extends Component {
   onFormSubmite = data => {
-    createCourse(data);
+    dispatch(createCourse(data));
   };
 
   render() {

@@ -6,8 +6,7 @@ import namedRoutes from './namedRoutes';
 
 class PrivateRoute extends Component {
   render() {
-    console.log(this.props);
-
+    //  console.log(this.props);
     let { component: Component, isAuthenticated, ...rest } = this.props;
 
     return (
@@ -17,7 +16,7 @@ class PrivateRoute extends Component {
           return isAuthenticated ? (
             <Component {...props} />
           ) : (
-            <Redirect to={namedRoutes('app.auth.login')} />
+            <Redirect to={namedRoutes('app.auth.login')} intendedUrl={this.props.path} />
           );
         }}
       />

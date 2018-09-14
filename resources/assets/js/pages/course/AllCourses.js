@@ -3,11 +3,10 @@ import axios from 'axios';
 
 import namedRoutes from '../../routing/namedRoutes';
 import WithCourse from '../../containers/WithCourse';
-import store from '../../redux/store';
 
 class AllCourses extends Component {
   componentDidMount() {
-    this.props.getAllCourses(store.dispatch);
+    this.props.getAllCourses();
   }
 
   render() {
