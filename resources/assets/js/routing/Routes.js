@@ -21,7 +21,6 @@ class Routes extends Component {
             component={() => <h2>protected</h2>}
           />
 
-          {/* <Route exact path="/" component={RedirectToLogin} /> */}
           <Route path={namedRoutes('app.auth.login')} component={Login} />
           <Route path={namedRoutes('app.auth.register')} component={Register} />
           <Route path={namedRoutes('app.auth.logout')} component={Logout} />

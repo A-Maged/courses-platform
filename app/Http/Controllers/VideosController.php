@@ -17,9 +17,16 @@ class VideosController extends Controller
     {
         //  NOTE: validate request here
 
+        $video = \App\Video::create([
+            'title' => request('title'),
+            'slug' => str_slug(request('title')),
+            'description' => request('description'),
+            'course_id' => request('course_id'),
+            'publishedStatus' => request('publishedStatus'),
+        ]);
+
         $videoPath = storage_path() . '/uploads/';
         $fileName = str_slug($request->title) . '.mp4';
-
         request()->file('video_file')->move($videoPath, $fileName);
 
         // NOTE:  dispatch an event to uploade to s3

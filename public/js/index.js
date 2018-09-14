@@ -4648,8 +4648,9 @@ var createCourse = exports.createCourse = function createCourse() {
 var createVideo = exports.createVideo = function createVideo(data, fileSelector) {
   var formData = new FormData();
 
-  formData.append('title', data.title);
-  formData.append('description', data.description);
+  for (var key in data) {
+    formData.append(key, data[key]);
+  }
   formData.append('video_file', document.querySelector(fileSelector).files[0]);
 
   return function (dispatch, getState) {
@@ -41317,9 +41318,7 @@ var CourseForm = function (_Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = CourseForm.__proto__ || Object.getPrototypeOf(CourseForm)).call.apply(_ref, [this].concat(args))), _this), _this.handleSubmit = function (e) {
-      e.preventDefault();
-
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = CourseForm.__proto__ || Object.getPrototypeOf(CourseForm)).call.apply(_ref, [this].concat(args))), _this), _this.onFormSubmite = function (data) {
       _this.props.createCourse();
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
@@ -41327,12 +41326,15 @@ var CourseForm = function (_Component) {
   _createClass(CourseForm, [{
     key: 'render',
     value: function render() {
+      var handleSubmit = this.props.handleSubmit;
+
+
       return _react2.default.createElement(
         _Card2.default,
         { header: 'create course' },
         _react2.default.createElement(
           'form',
-          { onSubmit: this.handleSubmit },
+          { onSubmit: handleSubmit(this.onFormSubmite) },
           _react2.default.createElement(
             'div',
             { className: 'form-group' },
@@ -41423,6 +41425,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
@@ -41439,71 +41443,115 @@ var _Card2 = _interopRequireDefault(_Card);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // a form to create a video record in db and upload the video-file
+
+
 var onFormSubmite = function onFormSubmite(data) {
   (0, _store.dispatch)((0, _actionCreators.createVideo)(data, '#video_file'));
-}; // a form to create a video record in db and upload the video-file
-
-
-var VideoForm = function VideoForm(props) {
-  var handleSubmit = props.handleSubmit;
-
-
-  return _react2.default.createElement(
-    _Card2.default,
-    { header: 'create video' },
-    _react2.default.createElement(
-      'form',
-      { onSubmit: handleSubmit(onFormSubmite) },
-      _react2.default.createElement(
-        'div',
-        { className: 'form-group' },
-        _react2.default.createElement(
-          'label',
-          { htmlFor: 'title' },
-          'title'
-        ),
-        _react2.default.createElement(_reduxForm.Field, { name: 'title', component: 'input', className: 'form-control', type: 'text' })
-      ),
-      _react2.default.createElement(
-        'div',
-        { className: 'form-group' },
-        _react2.default.createElement(
-          'label',
-          { htmlFor: 'description' },
-          'description'
-        ),
-        _react2.default.createElement(_reduxForm.Field, {
-          name: 'description',
-          component: 'textarea',
-          className: 'form-control',
-          type: 'text'
-        })
-      ),
-      _react2.default.createElement(
-        'div',
-        { className: 'form-group' },
-        _react2.default.createElement(
-          'label',
-          { htmlFor: 'video_file' },
-          'upload file'
-        ),
-        _react2.default.createElement('input', { type: 'file', name: 'video_file', id: 'video_file' })
-      ),
-      _react2.default.createElement(
-        'button',
-        { type: 'submit', className: 'btn btn-primary' },
-        'Submit'
-      )
-    )
-  );
 };
 
-VideoForm = (0, _reduxForm.reduxForm)({
-  // a unique name for the form
-  form: 'videoForm'
-})(VideoForm);
+var VideoForm = function (_Component) {
+  _inherits(VideoForm, _Component);
 
-exports.default = VideoForm;
+  function VideoForm() {
+    _classCallCheck(this, VideoForm);
+
+    return _possibleConstructorReturn(this, (VideoForm.__proto__ || Object.getPrototypeOf(VideoForm)).apply(this, arguments));
+  }
+
+  _createClass(VideoForm, [{
+    key: 'render',
+    value: function render() {
+      var handleSubmit = this.props.handleSubmit;
+
+
+      return _react2.default.createElement(
+        _Card2.default,
+        { header: 'create video' },
+        _react2.default.createElement(
+          'form',
+          { onSubmit: handleSubmit(onFormSubmite) },
+          _react2.default.createElement(
+            'div',
+            { className: 'form-group' },
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'title' },
+              'title'
+            ),
+            _react2.default.createElement(_reduxForm.Field, { name: 'title', component: 'input', className: 'form-control', type: 'text' })
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'form-group' },
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'description' },
+              'description'
+            ),
+            _react2.default.createElement(_reduxForm.Field, {
+              name: 'description',
+              component: 'textarea',
+              className: 'form-control',
+              type: 'text'
+            })
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'form-group' },
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'publishedStatus' },
+              'published status'
+            ),
+            _react2.default.createElement(
+              _reduxForm.Field,
+              { component: 'select', className: 'form-control', name: 'publishedStatus' },
+              _react2.default.createElement(
+                'option',
+                { value: 'draft' },
+                'draft'
+              ),
+              _react2.default.createElement(
+                'option',
+                { value: 'published' },
+                'published'
+              )
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'form-group' },
+            _react2.default.createElement(
+              'label',
+              { htmlFor: 'video_file' },
+              'upload file'
+            ),
+            _react2.default.createElement('input', { type: 'file', name: 'video_file', id: 'video_file' })
+          ),
+          _react2.default.createElement(
+            'button',
+            { type: 'submit', className: 'btn btn-primary' },
+            'Submit'
+          )
+        )
+      );
+    }
+  }]);
+
+  return VideoForm;
+}(_react.Component);
+
+exports.default = (0, _reduxForm.reduxForm)({
+  form: 'videoForm',
+  initialValues: {
+    publishedStatus: 'draft'
+  }
+})(VideoForm);
 
 /***/ }),
 /* 390 */

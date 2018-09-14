@@ -1,8 +1,5 @@
 pages:
-	create course form
-	uploade/create video form
 
-	list all courses
 	show one course and list it's videos 
 	show one video
 
@@ -33,6 +30,8 @@ login:
 
 BACK-END:
 ---------
+
+increase upload_max_size
 
 add an image field to the courses table
 

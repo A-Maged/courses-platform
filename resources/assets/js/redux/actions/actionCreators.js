@@ -49,13 +49,6 @@ export const logout = () => ({
   type: actionTypes.AUTH_LOGOUT_REQUEST
 });
 
-export const courseFormEdit = payload => {
-  return {
-    type: actionTypes.CREATE_COURSE__FORM_EDIT,
-    payload
-  };
-};
-
 export const getAllCourses = () => {
   return dispatch => {
     axios.get(namedRoutes('server.courses.index')).then(response => {
@@ -67,15 +60,13 @@ export const getAllCourses = () => {
   };
 };
 
-export const createCourse = () => {
+export const createCourse = data => {
   return (dispatch, getState) => {
-    let { title, description, publishedStatus } = getState().form.courseForm.values;
-
     axios
       .post(namedRoutes('server.courses.store'), {
-        title,
-        description,
-        publishedStatus
+        title: data.title,
+        description: data.description,
+        publishedStatus: data.publishedStatus
       })
       .then(function(response) {
         // redirect
@@ -90,8 +81,9 @@ export const createCourse = () => {
 export const createVideo = (data, fileSelector) => {
   let formData = new FormData();
 
-  formData.append('title', data.title);
-  formData.append('description', data.description);
+  for (var key in data) {
+    formData.append(key, data[key]);
+  }
   formData.append('video_file', document.querySelector(fileSelector).files[0]);
 
   return (dispatch, getState) => {

@@ -19,7 +19,6 @@ class CreateVideosTable extends Migration
             $table->string('title');
             $table->integer('course_id')->nullable();
             $table->text('description')->nullable();
-            $table->text('url')->nullable();
             $table->string('publishedStatus')->default('draft');
             $table->timestamps();
         });

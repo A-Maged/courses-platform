@@ -1,14 +1,21 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 
-import WithCourse from '../../containers/WithCourse';
+import { dispatch } from '../../redux/store';
+import { createCourse } from '../../redux/actions/actionCreators';
 import Card from '../../components/Card';
 
 class CourseForm extends Component {
+  onFormSubmite = data => {
+    createCourse(data);
+  };
+
   render() {
+    const { handleSubmit } = this.props;
+
     return (
       <Card header="create course">
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={handleSubmit(this.onFormSubmite)}>
           <div className="form-group">
             <label htmlFor="courseTitle">title</label>
             <Field
@@ -47,20 +54,11 @@ class CourseForm extends Component {
       </Card>
     );
   }
-
-  handleSubmit = e => {
-    e.preventDefault();
-
-    this.props.createCourse();
-  };
 }
 
-CourseForm = reduxForm({
-  // a unique name for the form
+export default reduxForm({
   form: 'courseForm',
   initialValues: {
     publishedStatus: 'draft'
   }
 })(CourseForm);
-
-export default WithCourse(CourseForm);
