@@ -8,17 +8,14 @@ pages:
 ---------
 FRONT-END:
 ---------
-on page refresh(App.js componentDidMount) check auth and set user in store
-	then make allCourses a private route
+
+ui loading until data is present 
 	
 after redirect keep intented-page-url to redirect to after authintication 
-
-fix: user object in redux store gets deleted
 
 
 validate data with npm package
 add flash messeges	
-ui loading until data is present 
 
 
 login:

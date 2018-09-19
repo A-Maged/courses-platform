@@ -13,6 +13,9 @@ import { LOADING } from './redux/actions/actionTypes';
 
 class App extends Component {
   componentDidMount() {
+    /*   VERY IMPORTANT */
+    // this makes sure user's data is available in the store
+    // but only if user is logged-in (browser has a valid cookie)
     if (!this.props.isAuthenticated) {
       dispatch(toggleLoading());
       dispatch(isAuthenticated());
