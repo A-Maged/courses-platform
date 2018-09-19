@@ -37,8 +37,8 @@ class VideoForm extends Component {
 					</div>
 
 					<div className="form-group">
-						<label htmlFor="courseId">add to course</label>
-						<Field component="select" className="form-control" name="courseId">
+						<label htmlFor="course_id">add to course</label>
+						<Field component="select" className="form-control" name="course_id">
 							<option value="">single</option>
 
 							{allCourses &&
