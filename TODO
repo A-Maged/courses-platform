@@ -11,9 +11,6 @@ FRONT-END:
 
 ui loading until data is present 
 	
-after redirect keep intented-page-url to redirect to after authintication 
-
-
 validate data with npm package
 add flash messeges	
 
