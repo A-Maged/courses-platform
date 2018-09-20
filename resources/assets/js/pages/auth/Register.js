@@ -6,15 +6,15 @@ import WithAuthForm from '../../containers/WithAuthForm';
 import RegisterForm from '../../components/RegisterForm';
 
 class Register extends Component {
-  render() {
-    return (
-      <div>
-        {(this.props.isAuthenticated && (
-          <Redirect to={namedRoutes('app.courses.index')} />
-        )) || <RegisterForm />}
-      </div>
-    );
-  }
+	render() {
+		return (
+			<div>
+				{(this.props.isAuthenticated && (
+					<Redirect to={namedRoutes('app.courses.index')} />
+				)) || <RegisterForm />}
+			</div>
+		);
+	}
 }
 
 export default WithAuthForm(Register);

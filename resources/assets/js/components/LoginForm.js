@@ -1,14 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import WithAuthForm from '../containers/WithAuthForm';
 import namedRoutes from '../routing/namedRoutes';
 import Card from './Card';
+import { boundRedirect } from '../redux/actions/actionCreators';
 
 const LoginForm = props => {
 	const handleSubmit = e => {
 		e.preventDefault();
-		props.login();
+
+		props.login().then(() => {
+			// redirect to intented url
+			boundRedirect('/cccccccc');
+		});
 	};
 
 	return (
@@ -78,4 +82,4 @@ const LoginForm = props => {
 	);
 };
 
-export default WithAuthForm(LoginForm);
+export default LoginForm;

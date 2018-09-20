@@ -3,6 +3,7 @@ import axios from 'axios';
 import * as actionTypes from './actionTypes';
 import { dispatch } from '../store';
 import namedRoutes from '../../routing/namedRoutes';
+import { resolve } from 'url';
 
 export const boundRedirect = (path, intendedUrl) => {
 	dispatch({
@@ -18,10 +19,13 @@ export const boundRouteChanged = location => {
 		location
 	});
 };
+
 export const toggleLoading = value => ({
 	type: actionTypes.LOADING,
 	value
 });
+
+// ****************************************************************************
 
 export const authFormEdit = payload => {
 	return {
@@ -38,22 +42,22 @@ export const authFormUpdateRememberMe = value => {
 };
 
 export const isAuthenticated = () => {
-	return dispatch => {
-		axios.get(namedRoutes('server.auth.is_authenticated')).then(response => {
-			var success = response.data.status === 'success' ? true : false;
-
-			if (success) {
-				dispatch({
-					type: actionTypes.AUTH_REQUEST_SUCCESS,
+	return (dispatch, getState) => {
+		return axios
+			.get(namedRoutes('server.auth.is_authenticated'))
+			.then(response => {
+				authRequestSuccess({
 					user: response.data.data,
 					isAuthenticated: true
 				});
-			} else {
-				dispatch(logout());
-			}
 
-			dispatch(toggleLoading(false));
-		});
+				dispatch(toggleLoading(false));
+			})
+			.catch(error => {
+				// console.log(error);
+				dispatch(logout());
+				dispatch(toggleLoading(false));
+			});
 	};
 };
 
@@ -79,20 +83,18 @@ export const register = () => {
 export const login = redirectUrl => {
 	return (dispatch, getState) => {
 		let { email, password, rememberMe } = getState().auth;
-		axios
+
+		return axios
 			.post(namedRoutes('server.auth.login'), {
 				email: email,
 				password: password,
 				remember: rememberMe
 			})
 			.then(function(response) {
-				dispatch({
-					type: actionTypes.AUTH_REQUEST_SUCCESS,
+				authRequestSuccess({
 					user: response.data.data,
 					isAuthenticated: true
 				});
-
-				boundRedirect();
 			})
 			.catch(error => {
 				console.log(error);
@@ -100,17 +102,27 @@ export const login = redirectUrl => {
 	};
 };
 
-export const logout = () => {
+export const logout = redirectUrl => {
 	return (dispatch, getState) => {
-		axios.post(namedRoutes('server.auth.logout'), {}).then(function(response) {
-			dispatch({
-				type: actionTypes.AUTH_LOGOUT_REQUEST
+		return axios
+			.post(namedRoutes('server.auth.logout'), {})
+			.then(function(response) {
+				dispatch({
+					type: actionTypes.AUTH_LOGOUT_REQUEST
+				});
 			});
-
-			boundRedirect(namedRoutes('app.auth.login'));
-		});
 	};
 };
+
+export const authRequestSuccess = ({ user, isAuthenticated }) => {
+	dispatch({
+		type: actionTypes.AUTH_REQUEST_SUCCESS,
+		user,
+		isAuthenticated
+	});
+};
+
+// ****************************************************************************
 
 export const getAllCourses = () => {
 	return dispatch => {

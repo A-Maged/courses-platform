@@ -43,4 +43,8 @@ const authReducer = (state = initialState, action) => {
 	}
 };
 
+export const selectEmail = state => {
+	return state.auth.email;
+};
+
 export default authReducer;

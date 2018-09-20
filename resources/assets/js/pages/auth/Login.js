@@ -6,10 +6,16 @@ import WithAuthForm from '../../containers/WithAuthForm';
 import LoginForm from '../../components/LoginForm';
 
 class Login extends Component {
+	componentWillMount() {
+		console.log('Login::props  ', this.props);
+	}
+
 	render() {
 		return (
 			<div>
-				{(this.props.isAuthenticated && <Redirect to="/qqqqq" />) || <LoginForm />}
+				{(this.props.isAuthenticated && <Redirect to="/qqqqq" />) || (
+					<LoginForm {...this.props} />
+				)}
 			</div>
 		);
 	}

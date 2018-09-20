@@ -3,6 +3,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 
 import * as actionCreators from '../redux/actions/actionCreators';
+import { selectEmail } from '../redux/reducers/authReducer';
 
 const WithAuthForm = WrapedComponent => {
 	return class extends Component {
@@ -14,7 +15,7 @@ const WithAuthForm = WrapedComponent => {
 
 const mapStateToProps = state => {
 	return {
-		email: state.auth.email,
+		email: selectEmail(state),
 		password: state.auth.password,
 		name: state.auth.name,
 		rememberMe: state.auth.rememberMe,
@@ -25,14 +26,21 @@ const mapStateToProps = state => {
 
 const mapDispatchToprops = dispatch => {
 	return {
-		nameChanged: e => dispatch(actionCreators.authFormEdit({ name: e.target.value })),
-		emailChanged: e => dispatch(actionCreators.authFormEdit({ email: e.target.value })),
+		nameChanged: e =>
+			dispatch(actionCreators.authFormEdit({ name: e.target.value })),
+
+		emailChanged: e =>
+			dispatch(actionCreators.authFormEdit({ email: e.target.value })),
+
 		passwordChanged: e =>
 			dispatch(actionCreators.authFormEdit({ password: e.target.value })),
+
 		rememberMeChanged: e => dispatch(actionCreators.authFormUpdateRememberMe()),
 
 		login: redirectUrl => dispatch(actionCreators.login(redirectUrl)),
-		logout: () => dispatch(actionCreators.logout()),
+
+		logout: redirectUrl => dispatch(actionCreators.logout(redirectUrl)),
+
 		register: () => dispatch(actionCreators.register())
 	};
 };

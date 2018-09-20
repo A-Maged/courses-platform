@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Symfony\Component\HttpFoundation\Response;
 use \App\User;
 
 class AuthController extends Controller
@@ -27,7 +28,7 @@ class AuthController extends Controller
         return response()->json([
             'status' => 'failed',
             'msg' => 'you are not logged in',
-        ]);
+        ], Response::HTTP_UNAUTHORIZED);
     }
 
     public function register()
@@ -73,7 +74,7 @@ class AuthController extends Controller
         return response()->json([
             'status' => 'failed',
             'msg' => 'wrong credentials',
-        ]);
+        ], Response::HTTP_UNAUTHORIZED);
     }
 
     public function logout()
