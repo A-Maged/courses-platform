@@ -11,7 +11,7 @@ class Login extends Component {
 		return (
 			<div>
 				{(this.props.isAuthenticated && (
-					<Redirect to={namedRoutes('app.root')} />
+					<Redirect to={namedRoutes('app.courses.index')} />
 				)) || <LoginForm {...this.props} />}
 			</div>
 		);

@@ -16,7 +16,12 @@ import Routes from './routing/Routes';
 import { LOADING } from './redux/actions/actionTypes';
 
 class App extends Component {
+	state = {
+		initialUrl: ''
+	};
+
 	componentWillMount() {
+		this.setState({ initialUrl: history.location.pathname });
 		boundRouteChanged(history.location);
 	}
 
@@ -30,7 +35,9 @@ class App extends Component {
 		// but only if user is logged-in (browser has a valid cookie)
 		if (!this.props.isAuthenticated) {
 			dispatch(toggleLoading());
-			dispatch(isAuthenticated());
+			dispatch(isAuthenticated()).then(() => {
+				history.push(this.state.initialUrl);
+			});
 		}
 	}
 

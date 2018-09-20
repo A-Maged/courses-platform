@@ -40612,19 +40612,32 @@ var App = function (_Component) {
 	_inherits(App, _Component);
 
 	function App() {
+		var _ref;
+
+		var _temp, _this, _ret;
+
 		_classCallCheck(this, App);
 
-		return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+		for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+			args[_key] = arguments[_key];
+		}
+
+		return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = App.__proto__ || Object.getPrototypeOf(App)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+			initialUrl: ''
+		}, _temp), _possibleConstructorReturn(_this, _ret);
 	}
 
 	_createClass(App, [{
 		key: 'componentWillMount',
 		value: function componentWillMount() {
+			this.setState({ initialUrl: _history2.default.location.pathname });
 			(0, _actionCreators.boundRouteChanged)(_history2.default.location);
 		}
 	}, {
 		key: 'componentDidMount',
 		value: function componentDidMount() {
+			var _this2 = this;
+
 			_history2.default.listen(function () {
 				(0, _actionCreators.boundRouteChanged)(_history2.default.location);
 			});
@@ -40634,7 +40647,9 @@ var App = function (_Component) {
 			// but only if user is logged-in (browser has a valid cookie)
 			if (!this.props.isAuthenticated) {
 				(0, _store.dispatch)((0, _actionCreators.toggleLoading)());
-				(0, _store.dispatch)((0, _actionCreators.isAuthenticated)());
+				(0, _store.dispatch)((0, _actionCreators.isAuthenticated)()).then(function () {
+					_history2.default.push(_this2.state.initialUrl);
+				});
 			}
 		}
 	}, {
@@ -40908,13 +40923,25 @@ var Routes = function (_Component) {
 					_react2.default.createElement(_reactRouterDom.Route, { path: (0, _namedRoutes2.default)('app.auth.login'), component: _Login2.default }),
 					_react2.default.createElement(_reactRouterDom.Route, { path: (0, _namedRoutes2.default)('app.auth.register'), component: _Register2.default }),
 					_react2.default.createElement(_reactRouterDom.Route, { path: (0, _namedRoutes2.default)('app.auth.logout'), component: _Logout2.default }),
-					_react2.default.createElement(_PrivateRoute2.default, { path: (0, _namedRoutes2.default)('app.courses.create'), component: _CourseForm2.default }),
+					_react2.default.createElement(_PrivateRoute2.default, {
+						path: (0, _namedRoutes2.default)('app.courses.create'),
+						component: _CourseForm2.default
+					}),
 					_react2.default.createElement(_PrivateRoute2.default, {
 						exact: true,
 						path: (0, _namedRoutes2.default)('app.courses.index'),
 						component: _AllCourses2.default
 					}),
-					_react2.default.createElement(_PrivateRoute2.default, { path: (0, _namedRoutes2.default)('app.videos.create'), component: _VideoForm2.default }),
+					_react2.default.createElement(_PrivateRoute2.default, {
+						path: (0, _namedRoutes2.default)('app.videos.create'),
+						component: _VideoForm2.default
+					}),
+					_react2.default.createElement(_reactRouterDom.Route, {
+						path: '/',
+						render: function render() {
+							return _react2.default.createElement(_reactRouterDom.Redirect, { to: (0, _namedRoutes2.default)('app.courses.index') });
+						}
+					}),
 					_react2.default.createElement(_reactRouterDom.Route, { component: function component() {
 							return _react2.default.createElement(
 								'h1',
@@ -41077,7 +41104,7 @@ var Login = function (_Component) {
 			return _react2.default.createElement(
 				'div',
 				null,
-				this.props.isAuthenticated && _react2.default.createElement(_reactRouterDom.Redirect, { to: (0, _namedRoutes2.default)('app.root') }) || _react2.default.createElement(_LoginForm2.default, this.props)
+				this.props.isAuthenticated && _react2.default.createElement(_reactRouterDom.Redirect, { to: (0, _namedRoutes2.default)('app.courses.index') }) || _react2.default.createElement(_LoginForm2.default, this.props)
 			);
 		}
 	}]);
