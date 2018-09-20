@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Symfony\Component\HttpFoundation\Response;
 
 class isPremium
 {
@@ -23,6 +24,6 @@ class isPremium
         return response()->json([
             'status' => 'failed',
             'msg' => 'you are not a premium user',
-        ]);
+		  ],Response::HTTP_UNAUTHORIZED );
     }
 }

@@ -128,7 +128,7 @@ export const getAllCourses = () => {
 	return dispatch => {
 		let url = namedRoutes('server.courses.index');
 
-		axios.get(url).then(response => {
+		return axios.get(url).then(response => {
 			dispatch({
 				type: actionTypes.GET_ALL_COURSES,
 				allCourses: response.data.data
@@ -139,7 +139,7 @@ export const getAllCourses = () => {
 
 export const createCourse = data => {
 	return (dispatch, getState) => {
-		axios
+		return axios
 			.post(namedRoutes('server.courses.store'), {
 				title: data.title,
 				description: data.description,
@@ -161,11 +161,13 @@ export const createVideo = (data, fileSelector) => {
 	formData.append('video_file', document.querySelector(fileSelector).files[0]);
 
 	return (dispatch, getState) => {
-		axios.post(namedRoutes('server.videos.store'), formData).then(response => {
-			console.log(response.data);
+		return axios
+			.post(namedRoutes('server.videos.store'), formData)
+			.then(response => {
+				console.log(response.data);
 
-			// redirect
-			boundRedirect(namedRoutes('app.courses.index'));
-		});
+				// redirect
+				boundRedirect(namedRoutes('app.courses.index'));
+			});
 	};
 };

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import namedRoutes from '../routing/namedRoutes';
 import Card from './Card';
 import { boundRedirect } from '../redux/actions/actionCreators';
+import history from '../redux/history';
 
 const LoginForm = props => {
 	const handleSubmit = e => {
@@ -11,7 +12,7 @@ const LoginForm = props => {
 
 		props.login().then(() => {
 			// redirect to intented url
-			boundRedirect('/cccccccc');
+			// history.goBack();
 		});
 	};
 

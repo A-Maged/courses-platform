@@ -1919,7 +1919,7 @@ var getAllCourses = exports.getAllCourses = function getAllCourses() {
 	return function (dispatch) {
 		var url = (0, _namedRoutes2.default)('server.courses.index');
 
-		_axios2.default.get(url).then(function (response) {
+		return _axios2.default.get(url).then(function (response) {
 			dispatch({
 				type: actionTypes.GET_ALL_COURSES,
 				allCourses: response.data.data
@@ -1930,7 +1930,7 @@ var getAllCourses = exports.getAllCourses = function getAllCourses() {
 
 var createCourse = exports.createCourse = function createCourse(data) {
 	return function (dispatch, getState) {
-		_axios2.default.post((0, _namedRoutes2.default)('server.courses.store'), {
+		return _axios2.default.post((0, _namedRoutes2.default)('server.courses.store'), {
 			title: data.title,
 			description: data.description,
 			publishedStatus: data.publishedStatus
@@ -1950,7 +1950,7 @@ var createVideo = exports.createVideo = function createVideo(data, fileSelector)
 	formData.append('video_file', document.querySelector(fileSelector).files[0]);
 
 	return function (dispatch, getState) {
-		_axios2.default.post((0, _namedRoutes2.default)('server.videos.store'), formData).then(function (response) {
+		return _axios2.default.post((0, _namedRoutes2.default)('server.videos.store'), formData).then(function (response) {
 			console.log(response.data);
 
 			// redirect
@@ -41038,6 +41038,10 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(10);
 
+var _history = __webpack_require__(126);
+
+var _history2 = _interopRequireDefault(_history);
+
 var _namedRoutes = __webpack_require__(9);
 
 var _namedRoutes2 = _interopRequireDefault(_namedRoutes);
@@ -41068,17 +41072,12 @@ var Login = function (_Component) {
 	}
 
 	_createClass(Login, [{
-		key: 'componentWillMount',
-		value: function componentWillMount() {
-			console.log('Login::props  ', this.props);
-		}
-	}, {
 		key: 'render',
 		value: function render() {
 			return _react2.default.createElement(
 				'div',
 				null,
-				this.props.isAuthenticated && _react2.default.createElement(_reactRouterDom.Redirect, { to: '/qqqqq' }) || _react2.default.createElement(_LoginForm2.default, this.props)
+				this.props.isAuthenticated && _react2.default.createElement(_reactRouterDom.Redirect, { to: (0, _namedRoutes2.default)('app.root') }) || _react2.default.createElement(_LoginForm2.default, this.props)
 			);
 		}
 	}]);
@@ -41115,6 +41114,10 @@ var _Card2 = _interopRequireDefault(_Card);
 
 var _actionCreators = __webpack_require__(18);
 
+var _history = __webpack_require__(126);
+
+var _history2 = _interopRequireDefault(_history);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var LoginForm = function LoginForm(props) {
@@ -41123,7 +41126,7 @@ var LoginForm = function LoginForm(props) {
 
 		props.login().then(function () {
 			// redirect to intented url
-			(0, _actionCreators.boundRedirect)('/cccccccc');
+			// history.goBack();
 		});
 	};
 

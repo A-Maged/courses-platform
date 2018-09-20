@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Symfony\Component\HttpFoundation\Response;
 
 class isAdmin
 {
@@ -23,7 +24,7 @@ class isAdmin
         return response()->json([
             'status' => 'failed',
             'msg' => 'you are not an admin',
-        ]);
+        ], Response::HTTP_UNAUTHORIZED);
         //   }
 
     }
