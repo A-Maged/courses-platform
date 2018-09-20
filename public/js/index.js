@@ -1771,7 +1771,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.createVideo = exports.createCourse = exports.getAllCourses = exports.authRequestSuccess = exports.logout = exports.login = exports.register = exports.isAuthenticated = exports.authFormUpdateRememberMe = exports.authFormEdit = exports.toggleLoading = exports.boundRouteChanged = exports.boundRedirect = undefined;
+exports.createVideo = exports.createCourse = exports.getAllCourses = exports.authRequestSuccess = exports.logout = exports.login = exports.register = exports.isAuthenticated = exports.authFormUpdateRememberMe = exports.authFormEdit = exports.boundToggleLoading = exports.boundRouteChanged = exports.boundRedirect = undefined;
 
 var _axios = __webpack_require__(53);
 
@@ -1808,11 +1808,11 @@ var boundRouteChanged = exports.boundRouteChanged = function boundRouteChanged(l
 	});
 };
 
-var toggleLoading = exports.toggleLoading = function toggleLoading(value) {
-	return {
+var boundToggleLoading = exports.boundToggleLoading = function boundToggleLoading(value) {
+	(0, _store.dispatch)({
 		type: actionTypes.LOADING,
 		value: value
-	};
+	});
 };
 
 // ****************************************************************************
@@ -1839,11 +1839,11 @@ var isAuthenticated = exports.isAuthenticated = function isAuthenticated() {
 				isAuthenticated: true
 			});
 
-			dispatch(toggleLoading(false));
+			boundToggleLoading(false);
 		}).catch(function (error) {
 			// console.log(error);
 			dispatch(logout());
-			dispatch(toggleLoading(false));
+			boundToggleLoading(false);
 		});
 	};
 };
@@ -40646,7 +40646,7 @@ var App = function (_Component) {
 			// this makes sure user's data is available in the store
 			// but only if user is logged-in (browser has a valid cookie)
 			if (!this.props.isAuthenticated) {
-				(0, _store.dispatch)((0, _actionCreators.toggleLoading)());
+				(0, _actionCreators.boundToggleLoading)();
 				(0, _store.dispatch)((0, _actionCreators.isAuthenticated)()).then(function () {
 					_history2.default.push(_this2.state.initialUrl);
 				});

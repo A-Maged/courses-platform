@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import history from './redux/history';
 import { dispatch } from './redux/store';
 import {
-	toggleLoading,
+	boundToggleLoading,
 	isAuthenticated,
 	boundRouteChanged
 } from './redux/actions/actionCreators';
@@ -34,7 +34,7 @@ class App extends Component {
 		// this makes sure user's data is available in the store
 		// but only if user is logged-in (browser has a valid cookie)
 		if (!this.props.isAuthenticated) {
-			dispatch(toggleLoading());
+			boundToggleLoading();
 			dispatch(isAuthenticated()).then(() => {
 				history.push(this.state.initialUrl);
 			});

@@ -20,10 +20,12 @@ export const boundRouteChanged = location => {
 	});
 };
 
-export const toggleLoading = value => ({
-	type: actionTypes.LOADING,
-	value
-});
+export const boundToggleLoading = value => {
+	dispatch({
+		type: actionTypes.LOADING,
+		value
+	});
+};
 
 // ****************************************************************************
 
@@ -51,12 +53,12 @@ export const isAuthenticated = () => {
 					isAuthenticated: true
 				});
 
-				dispatch(toggleLoading(false));
+				boundToggleLoading(false);
 			})
 			.catch(error => {
 				// console.log(error);
 				dispatch(logout());
-				dispatch(toggleLoading(false));
+				boundToggleLoading(false);
 			});
 	};
 };
