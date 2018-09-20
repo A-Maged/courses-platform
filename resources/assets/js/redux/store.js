@@ -5,6 +5,7 @@ import customMiddlewares from './middlewares';
 import ReduxThunk from 'redux-thunk';
 
 const middlewares = customMiddlewares.concat(ReduxThunk);
+// const middlewares = [ReduxThunk];
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(...middlewares)));

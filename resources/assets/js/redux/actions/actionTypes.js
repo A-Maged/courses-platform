@@ -1,5 +1,7 @@
-export const REDIRECT = '[ UI ] REDIRECT';
 export const LOADING = '[ UI ] LOADING';
+
+export const REDIRECT = '[ ROUTING ] REDIRECT';
+export const ROUTE_CHANGED = '[ ROUTING ] ROUTE_CHANGED';
 
 export const AUTH_FORM_EDIT = '[ AUTH ] EDIT';
 export const AUTH_FORM_UPDATE_REMEMBER_ME = '[ AUTH ] UPDATE_REMEMBER_ME';

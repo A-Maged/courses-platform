@@ -15,7 +15,7 @@ class AuthController extends Controller
     {
         if (Auth::check()) {
             //   NOTE: remove this , it's just for testing
-            sleep(3);
+            // sleep(3);
 
             return response()->json([
                 'status' => 'success',

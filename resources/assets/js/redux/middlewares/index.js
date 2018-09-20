@@ -1,4 +1,4 @@
-import { uiRedirect } from './Ui';
+import { routeRedirect } from './routing';
 
 // export all custom middlewares here - must be array
-export default [uiRedirect];
+export default [routeRedirect];
