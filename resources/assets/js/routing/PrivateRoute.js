@@ -24,6 +24,7 @@ export default connect(
 		isAuthenticated: state.auth.isAuthenticated
 	}),
 	dispatch => ({
-		boundRedirect: (path, intendedUrl) => actionCreators.boundRedirect(path, intendedUrl)
+		boundRedirect: (path, intendedUrl) =>
+			actionCreators.boundRedirect(path, intendedUrl)
 	})
 )(PrivateRoute);
