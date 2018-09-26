@@ -5,30 +5,31 @@ import { connect } from 'react-redux';
 import * as actionCreators from '../redux/actions/actionCreators';
 
 const WithCourse = WrapedComponent => {
-  return class extends Component {
-    render() {
-      return <WrapedComponent {...this.props} />;
-    }
-  };
+	return class extends Component {
+		render() {
+			return <WrapedComponent {...this.props} />;
+		}
+	};
 };
 
 const mapStateToProps = state => {
-  return {
-    allCourses: state.course.allCourses
-  };
+	return {
+		allCourses: state.course.allCourses
+	};
 };
 
 const mapDispatchToprops = dispatch => {
-  return {
-    getAllCourses: () => dispatch(actionCreators.getAllCourses()),
-    createCourse: () => dispatch(actionCreators.createCourse())
-  };
+	return {
+		getAllCourses: () => dispatch(actionCreators.getAllCourses()),
+		createCourse: () => dispatch(actionCreators.createCourse()),
+		deleteCourse: id => dispatch(actionCreators.deleteCourse(id))
+	};
 };
 
 export default compose(
-  connect(
-    mapStateToProps,
-    mapDispatchToprops
-  ),
-  WithCourse
+	connect(
+		mapStateToProps,
+		mapDispatchToprops
+	),
+	WithCourse
 );

@@ -3,38 +3,35 @@ import axios from 'axios';
 
 import namedRoutes from '../../routing/namedRoutes';
 import WithCourse from '../../containers/WithCourse';
+import Card from '../../components/Card';
 
 class AllCourses extends Component {
-  componentDidMount() {
-    this.props.getAllCourses();
-  }
+	componentDidMount() {
+		this.props.getAllCourses();
+	}
 
-  render() {
-    return (
-      <div>
-        {this.props.allCourses &&
-          this.props.allCourses.map((course, i) => {
-            return (
-              <div data-id={course.id} key={i}>
-                <h3> {course.title} </h3>
-                <button onClick={this.handleDelete}>delete</button>
-              </div>
-            );
-          })}
-      </div>
-    );
-  }
-
-  handleDelete = e => {
-    let self = this;
-    let courseId = e.target.parentElement.getAttribute('data-id');
-    let url = namedRoutes('server.courses.destroy', { id: courseId });
-    axios.delete(url).then(response => {
-      console.log(response.data);
-      // refresh
-      // self.props.history.push(namedRoutes('app.courses.index'));
-    });
-  };
+	render() {
+		return (
+			<div>
+				{this.props.allCourses &&
+					this.props.allCourses.map((course, i) => {
+						return (
+							<div key={i}>
+								<Card header={course.title}>
+									<p>{course.description}</p>
+									<button
+										onClick={this.props.deleteCourse.bind(null, course.id)}
+									>
+										delete
+									</button>
+								</Card>
+								<br />
+							</div>
+						);
+					})}
+			</div>
+		);
+	}
 }
 
 export default WithCourse(AllCourses);

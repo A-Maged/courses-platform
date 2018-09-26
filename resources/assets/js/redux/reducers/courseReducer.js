@@ -12,6 +12,12 @@ const courseReducer = (state = initialState, action) => {
 				allCourses: action.allCourses
 			};
 
+		case actionTypes.DELETE_COURSE:
+			return {
+				...state,
+				allCourses: state.allCourses.filter(course => course.id !== action.id)
+			};
+
 		default:
 			return state;
 	}

@@ -9,8 +9,6 @@ pages:
 FRONT-END:
 ---------
 
-ui loading until data is present 
-	
 validate data with npm package
 add flash messeges	
 

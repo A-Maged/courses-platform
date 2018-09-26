@@ -154,6 +154,19 @@ export const createCourse = data => {
 	};
 };
 
+export const deleteCourse = id => {
+	let url = namedRoutes('server.courses.destroy', { id });
+
+	return (dispatch, getState) => {
+		return axios.delete(url).then(function(response) {
+			dispatch({
+				type: actionTypes.DELETE_COURSE,
+				id: id
+			});
+		});
+	};
+};
+
 export const createVideo = (data, fileSelector) => {
 	let formData = new FormData();
 
