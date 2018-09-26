@@ -1,18 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import store from '../redux/store';
 import namedRoutes from '../routing/namedRoutes';
-import Card from './Card';
 import { boundRedirect } from '../redux/actions/actionCreators';
-import history from '../redux/history';
+import Card from './Card';
 
 const LoginForm = props => {
 	const handleSubmit = e => {
 		e.preventDefault();
 
 		props.login().then(() => {
+			let intendedUrl = store.getState().routing.intendedUrl;
 			// redirect to intented url
-			// history.goBack();
+			intendedUrl ? boundRedirect(intendedUrl) : null;
 		});
 	};
 

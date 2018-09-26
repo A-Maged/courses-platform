@@ -38700,12 +38700,13 @@ var routeRedirect = exports.routeRedirect = function routeRedirect(store) {
 	return function (next) {
 		return function (action) {
 			if (action.type !== actionTypes.REDIRECT) return next(action);
-			// console.log(action.redirectTo);
 
 			_history2.default.push(action.redirectTo);
 
 			if (!action.intendedUrl) action.intendedUrl = store.getState().ui.intendedUrl;
-			return;
+			// console.log(action);
+			// return;
+			return next(action);
 		};
 	};
 };
@@ -42654,19 +42655,19 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(10);
 
+var _store = __webpack_require__(23);
+
+var _store2 = _interopRequireDefault(_store);
+
 var _namedRoutes = __webpack_require__(9);
 
 var _namedRoutes2 = _interopRequireDefault(_namedRoutes);
 
+var _actionCreators = __webpack_require__(13);
+
 var _Card = __webpack_require__(49);
 
 var _Card2 = _interopRequireDefault(_Card);
-
-var _actionCreators = __webpack_require__(13);
-
-var _history = __webpack_require__(45);
-
-var _history2 = _interopRequireDefault(_history);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -42675,8 +42676,9 @@ var LoginForm = function LoginForm(props) {
 		e.preventDefault();
 
 		props.login().then(function () {
+			var intendedUrl = _store2.default.getState().routing.intendedUrl;
 			// redirect to intented url
-			// history.goBack();
+			intendedUrl ? (0, _actionCreators.boundRedirect)(intendedUrl) : null;
 		});
 	};
 
