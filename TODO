@@ -13,11 +13,6 @@ validate data with npm package
 add flash messeges	
 
 
-login:
-	- don't display login if user is logged in
-	  check with the server to make sure he is really logged in and your not locking him out
-
-
 ----------------------------------------------------------------
 
 BACK-END:

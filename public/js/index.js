@@ -43422,6 +43422,7 @@ var AllCourses = function (_Component) {
 							_react2.default.createElement(
 								'button',
 								{
+									className: 'btn',
 									onClick: _this2.props.deleteCourse.bind(null, course.id)
 								},
 								'delete'
