@@ -63,7 +63,7 @@ class CoursesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int||string  $searchTerm
      * @return \Illuminate\Http\Response
      */
     public function show($searchTerm)

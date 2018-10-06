@@ -14,6 +14,7 @@ Route::resource('/courses', 'CoursesController')->except(['create', 'edit']);
 
 // videos
 Route::resource('/videos', 'VideosController')->except(['index', 'create', 'edit']);
+Route::get('/videos/stream/{id}', 'VideosController@streamVideo')->name('video.stream');
 
 // serve react index.html
 Route::fallback(function () {return view('SPA');});

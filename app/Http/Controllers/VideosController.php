@@ -3,9 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use \App\Video;
+use \App\VideoStream;
 
 class VideosController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('isAdmin', ['except' => ['show', 'streamVideo']]);
+        $this->middleware('isPremium', ['only' => ['show', 'streamVideo']]);
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -17,7 +26,7 @@ class VideosController extends Controller
     {
         //  NOTE: validate request here
 
-        $video = \App\Video::create([
+        $video = Video::create([
             'title' => request('title'),
             'slug' => str_slug(request('title')),
             'description' => request('description'),
@@ -40,12 +49,29 @@ class VideosController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int||string  $searchTerm
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($searchTerm)
     {
-        //
+        if (Is_Numeric($searchTerm)) {
+            $video = Video::find($searchTerm);
+        } else {
+            $video = Video::where('slug', $searchTerm)->first();
+        }
+
+        $video['url'] = '/videos/stream/' . $video->id;
+
+        return response()->json($video);
+    }
+
+    public function streamVideo($id)
+    {
+        $video = Video::find($id);
+        $videoFilePath = storage_path() . '/uploads/' . $video->slug . '.mp4';
+
+        $stream = new VideoStream($videoFilePath);
+        $stream->start();
     }
 
     /**
