@@ -19,6 +19,7 @@ class AllCourses extends Component {
 							<div key={i}>
 								<Card header={course.title}>
 									<p>{course.description}</p>
+									<b>{course.duration}</b>
 									<button
 										className="btn"
 										onClick={this.props.deleteCourse.bind(null, course.id)}

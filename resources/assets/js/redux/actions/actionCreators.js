@@ -142,11 +142,7 @@ export const getAllCourses = () => {
 export const createCourse = data => {
 	return (dispatch, getState) => {
 		return axios
-			.post(namedRoutes('server.courses.store'), {
-				title: data.title,
-				description: data.description,
-				publishedStatus: data.publishedStatus
-			})
+			.post(namedRoutes('server.courses.store'), data)
 			.then(function(response) {
 				// redirect
 				boundRedirect(namedRoutes('app.courses.index'));

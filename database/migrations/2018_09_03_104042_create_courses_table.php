@@ -19,6 +19,7 @@ class CreateCoursesTable extends Migration
             $table->string('title')->unique();
             $table->text('description');
             $table->string('publishedStatus')->default('draft');
+            $table->string('duration');
             $table->timestamps();
         });
     }

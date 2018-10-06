@@ -48,6 +48,7 @@ class CoursesController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'publishedStatus' => $request->publishedStatus,
+            'duration' => $request->duration,
             'slug' => str_slug($request->title),
         ]);
 
