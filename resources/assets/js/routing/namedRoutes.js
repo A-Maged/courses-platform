@@ -3,7 +3,7 @@ import { getNestedProp } from '../utils';
 // usage
 // namedRoutes('app.courses.edit', { id: 1 });
 const namedRoutes = (key, term) => {
-	let { token, id } = term || {};
+	let { token, id = ':id' } = term || {};
 
 	let routes = {
 		app: {
@@ -22,11 +22,14 @@ const namedRoutes = (key, term) => {
 
 			videos: {
 				create: '/app/videos/create',
-				edit: `/app/videos/${id}/edit`
+				edit: `/app/videos/${id}/edit`,
+				getStream: `/videos/stream/${id}`
 			}
 		},
 
-		//   ***************************************
+		/****************************************************
+		 * don't delete ${id} or ${token} in server routes
+		 ****************************************************/
 
 		server: {
 			auth: {

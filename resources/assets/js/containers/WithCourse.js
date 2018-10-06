@@ -14,7 +14,9 @@ const WithCourse = WrapedComponent => {
 
 const mapStateToProps = state => {
 	return {
-		allCourses: state.course.allCourses
+		allCourses: state.course.allCourses,
+		selectedCourse: state.course.selectedCourse,
+		videos: state.course.videos
 	};
 };
 
@@ -22,7 +24,9 @@ const mapDispatchToprops = dispatch => {
 	return {
 		getAllCourses: () => dispatch(actionCreators.getAllCourses()),
 		createCourse: () => dispatch(actionCreators.createCourse()),
-		deleteCourse: id => dispatch(actionCreators.deleteCourse(id))
+		deleteCourse: id => dispatch(actionCreators.deleteCourse(id)),
+		selectCourse: id => dispatch(actionCreators.selectCourse(id)),
+		getCourse: id => dispatch(actionCreators.getCourse(id))
 	};
 };
 

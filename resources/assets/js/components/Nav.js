@@ -1,36 +1,31 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { Component } from 'react';
+import { Link, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import namedRoutes from '../routing/namedRoutes';
 
-const navStyle = {
-	fontWeight: 'bold',
-	backgroundColor: '#444'
+const Nav = props => {
+	return (
+		<nav className="nav">
+			{!props.isAuthenticated ? (
+				<React.Fragment>
+					<Link to={namedRoutes('app.auth.register')}>register</Link>
+					<Link to={namedRoutes('app.auth.login')}>login</Link>
+				</React.Fragment>
+			) : (
+				<React.Fragment>
+					<Link to={namedRoutes('app.videos.create')}>create video</Link>
+					<Link to={namedRoutes('app.courses.index')}>all course</Link>
+					<Link to={namedRoutes('app.courses.create')}>create course</Link>
+					<Link to={namedRoutes('app.auth.logout')}>logout</Link>
+				</React.Fragment>
+			)}
+		</nav>
+	);
 };
 
-const Nav = () => (
-	<nav className="nav">
-		<NavLink activeStyle={navStyle} to={namedRoutes('app.videos.create')}>
-			create video
-		</NavLink>
+export default connect(state => ({
+	isAuthenticated: state.auth.isAuthenticated
+}))(Nav);
 
-		<NavLink activeStyle={navStyle} to={namedRoutes('app.courses.index')}>
-			all course
-		</NavLink>
-		<NavLink activeStyle={navStyle} to={namedRoutes('app.courses.create')}>
-			create course
-		</NavLink>
-
-		<NavLink activeStyle={navStyle} to={namedRoutes('app.auth.register')}>
-			register
-		</NavLink>
-		<NavLink activeStyle={navStyle} to={namedRoutes('app.auth.login')}>
-			login
-		</NavLink>
-		<NavLink activeStyle={navStyle} to={namedRoutes('app.auth.logout')}>
-			logout
-		</NavLink>
-	</nav>
-);
-
-export default Nav;
+// export default Nav;

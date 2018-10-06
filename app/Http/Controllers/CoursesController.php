@@ -74,6 +74,9 @@ class CoursesController extends Controller
             $course = Course::where('slug', $searchTerm)->first();
         }
 
+        $video = \App\Video::where('course_id', $course->id)->get();
+        $course['videos'] = $video;
+
         return response()->json($course);
     }
 

@@ -1,7 +1,9 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-	allCourses: []
+	allCourses: [],
+	selectedCourse: {},
+	videos: []
 };
 
 const courseReducer = (state = initialState, action) => {
@@ -16,6 +18,23 @@ const courseReducer = (state = initialState, action) => {
 			return {
 				...state,
 				allCourses: state.allCourses.filter(course => course.id !== action.id)
+			};
+
+		case actionTypes.SELECT_COURSE:
+			return {
+				...state,
+				selectedCourse: state.allCourses.filter(
+					course => action.id == course.id
+				)[0]
+			};
+
+		case actionTypes.COURSE_VIDEOS:
+			let modifiedVideos = [...state.videos];
+			modifiedVideos[action.course.id] = { ...action.course.videos };
+
+			return {
+				...state,
+				videos: [...modifiedVideos]
 			};
 
 		default:

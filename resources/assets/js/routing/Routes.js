@@ -10,6 +10,7 @@ import Logout from '../pages/auth/Logout';
 import CourseForm from '../pages/course/CourseForm';
 import VideoForm from '../pages/video/VideoForm';
 import AllCourses from '../pages/course/AllCourses';
+import ShowCourse from '../pages/course/ShowCourse';
 
 class Routes extends Component {
 	render() {
@@ -24,6 +25,12 @@ class Routes extends Component {
 						path={namedRoutes('app.courses.create')}
 						component={CourseForm}
 					/>
+
+					<PrivateRoute
+						path={namedRoutes('app.courses.show')}
+						component={ShowCourse}
+					/>
+
 					<PrivateRoute
 						exact
 						path={namedRoutes('app.courses.index')}

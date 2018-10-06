@@ -139,6 +139,19 @@ export const getAllCourses = () => {
 	};
 };
 
+export const getCourse = id => {
+	return dispatch => {
+		let url = namedRoutes('server.courses.show', { id });
+
+		return axios.get(url).then(response => {
+			dispatch({
+				type: actionTypes.COURSE_VIDEOS,
+				course: response.data
+			});
+		});
+	};
+};
+
 export const createCourse = data => {
 	return (dispatch, getState) => {
 		return axios
@@ -161,6 +174,13 @@ export const deleteCourse = id => {
 			});
 		});
 	};
+};
+
+export const selectCourse = id => {
+	dispatch({
+		type: actionTypes.SELECT_COURSE,
+		id
+	});
 };
 
 export const createVideo = (data, fileSelector) => {
