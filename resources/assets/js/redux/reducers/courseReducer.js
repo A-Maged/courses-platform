@@ -29,12 +29,30 @@ const courseReducer = (state = initialState, action) => {
 			};
 
 		case actionTypes.COURSE_VIDEOS:
-			let modifiedVideos = [...state.videos];
-			modifiedVideos[action.course.id] = { ...action.course.videos };
+			let modifiedVideos = { ...state.videos };
+			action.course.videos.map(video => {
+				modifiedVideos[video.course_id] = {
+					...modifiedVideos[video.course_id],
+					[video.id]: video
+				};
+			});
+			return {
+				...state,
+				videos: { ...modifiedVideos }
+			};
+
+		case actionTypes.VIDEO_DATA:
+			let newVideos = {
+				...state.videos,
+				[action.video.course_id]: {
+					...state.videos[action.video.course_id],
+					[action.video.id]: action.video
+				}
+			};
 
 			return {
 				...state,
-				videos: [...modifiedVideos]
+				videos: { ...newVideos }
 			};
 
 		default:

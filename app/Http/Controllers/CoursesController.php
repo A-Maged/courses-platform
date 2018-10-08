@@ -42,6 +42,7 @@ class CoursesController extends Controller
             'title' => 'required|unique:courses|max:255',
             'description' => 'required',
             'publishedStatus' => 'required',
+            'duration' => 'required',
         ]);
 
         $course = new Course([
@@ -74,8 +75,13 @@ class CoursesController extends Controller
             $course = Course::where('slug', $searchTerm)->first();
         }
 
-        $video = \App\Video::where('course_id', $course->id)->get();
-        $course['videos'] = $video;
+        $videos = \App\Video::where('course_id', $course->id)->get();
+
+        foreach ($videos as &$video) {
+            $video['url'] = '/videos/stream/' . $video->id;
+        }
+
+        $course['videos'] = $videos;
 
         return response()->json($course);
     }

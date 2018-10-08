@@ -24,7 +24,12 @@ class VideosController extends Controller
      */
     public function store(Request $request)
     {
-        //  NOTE: validate request here
+        $request->validate([
+            'title' => 'required',
+            'course_id' => 'numeric',
+            'publishedStatus' => 'string',
+            'video_file' => 'required|file',
+        ]);
 
         $video = Video::create([
             'title' => request('title'),

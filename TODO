@@ -20,6 +20,10 @@ BACK-END:
 
 take a look at ./vendor/laravel/framework/src/Illuminate/Foundation/Auth/SendsPasswordResetEmails.php
 
+when course deleted: determine what to do with associated videos
+
+show only published courses and videos
+
 increase upload_max_size
 
 add an image field to the courses table

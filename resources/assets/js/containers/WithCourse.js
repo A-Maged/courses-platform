@@ -26,7 +26,8 @@ const mapDispatchToprops = dispatch => {
 		createCourse: () => dispatch(actionCreators.createCourse()),
 		deleteCourse: id => dispatch(actionCreators.deleteCourse(id)),
 		selectCourse: id => dispatch(actionCreators.selectCourse(id)),
-		getCourse: id => dispatch(actionCreators.getCourse(id))
+		getCourse: id => dispatch(actionCreators.getCourse(id)),
+		getVideo: id => dispatch(actionCreators.getVideo(id))
 	};
 };
 

@@ -21,6 +21,7 @@ const namedRoutes = (key, term) => {
 			},
 
 			videos: {
+				show: `/app/videos/${id}`,
 				create: '/app/videos/create',
 				edit: `/app/videos/${id}/edit`,
 				getStream: `/videos/stream/${id}`

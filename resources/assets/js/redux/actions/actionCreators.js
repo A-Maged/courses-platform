@@ -152,6 +152,19 @@ export const getCourse = id => {
 	};
 };
 
+export const getVideo = id => {
+	return dispatch => {
+		let url = namedRoutes('server.videos.show', { id });
+
+		return axios.get(url).then(response => {
+			dispatch({
+				type: actionTypes.VIDEO_DATA,
+				video: response.data
+			});
+		});
+	};
+};
+
 export const createCourse = data => {
 	return (dispatch, getState) => {
 		return axios

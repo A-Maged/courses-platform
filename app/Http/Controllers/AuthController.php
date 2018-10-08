@@ -14,8 +14,7 @@ class AuthController extends Controller
 
     public function isAuthenticated()
     {
-        //   NOTE: remove this , it's just for testing
-        sleep(1);
+
         if (Auth::check()) {
 
             return response()->json([

@@ -9,6 +9,7 @@ import Register from '../pages/auth/Register';
 import Logout from '../pages/auth/Logout';
 import CourseForm from '../pages/course/CourseForm';
 import VideoForm from '../pages/video/VideoForm';
+import ShowVideo from '../pages/video/ShowVideo';
 import AllCourses from '../pages/course/AllCourses';
 import ShowCourse from '../pages/course/ShowCourse';
 
@@ -40,6 +41,11 @@ class Routes extends Component {
 					<PrivateRoute
 						path={namedRoutes('app.videos.create')}
 						component={VideoForm}
+					/>
+
+					<PrivateRoute
+						path={namedRoutes('app.videos.show')}
+						component={ShowVideo}
 					/>
 
 					<Route
