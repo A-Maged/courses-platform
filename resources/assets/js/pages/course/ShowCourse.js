@@ -25,19 +25,15 @@ class ShowCourse extends Component {
 		selectCourse('');
 	}
 
-	renderVideos() {
+	renderVideosList() {
 		let videos = this.props.videos[this.props.selectedCourse.id];
 
 		if (!videos || Object.keys(videos).length === 0) return;
 
 		return Object.keys(videos).map(key => {
 			const video = videos[key];
-
 			return (
-				<Link
-					to={namedRoutes('app.videos.show', { id: video.id })}
-					key={Math.random()}
-				>
+				<Link to={namedRoutes('app.videos.show', { id: video.id })} key={Math.random()}>
 					<Card header={video.title}>{/*video.description*/}</Card>
 				</Link>
 			);
@@ -52,7 +48,7 @@ class ShowCourse extends Component {
 		) : (
 			<Card header={course.title}>
 				<p>{course.description}</p>
-				{this.renderVideos()}
+				{this.renderVideosList()}
 			</Card>
 		);
 	}

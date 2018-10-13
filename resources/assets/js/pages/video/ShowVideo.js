@@ -16,7 +16,6 @@ class ShowVideo extends Component {
 		let video = Object.keys(videos).map(key => {
 			return videos[key][this.videoID];
 		});
-		console.log('videoDetails', video);
 
 		if (!!video[0]) {
 			return video[0];
