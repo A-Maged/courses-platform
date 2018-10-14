@@ -21,7 +21,7 @@ class App extends Component {
 	};
 
 	componentWillMount() {
-		this.setState({ initialUrl: history.location.pathname });
+		this.setState({ initialUrl: history.location.pathname + history.location.search });
 		boundRouteChanged(history.location);
 	}
 

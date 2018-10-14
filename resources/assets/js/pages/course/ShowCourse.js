@@ -32,8 +32,13 @@ class ShowCourse extends Component {
 
 		return Object.keys(videos).map(key => {
 			const video = videos[key];
+			const videoUrl =
+				namedRoutes('app.courses.show', { id: this.props.selectedCourse.id }) +
+				'?video=' +
+				video.id;
+
 			return (
-				<Link to={namedRoutes('app.videos.show', { id: video.id })} key={Math.random()}>
+				<Link to={videoUrl} key={Math.random()}>
 					<Card header={video.title}>{/*video.description*/}</Card>
 				</Link>
 			);
@@ -48,6 +53,9 @@ class ShowCourse extends Component {
 		) : (
 			<Card header={course.title}>
 				<p>{course.description}</p>
+
+				{/* render video player */}
+
 				{this.renderVideosList()}
 			</Card>
 		);
