@@ -15,6 +15,8 @@ import Nav from './components/Nav';
 import Routes from './routing/Routes';
 import { LOADING } from './redux/actions/actionTypes';
 
+import Home from './pages/Home';
+
 class App extends Component {
 	state = {
 		initialUrl: ''
@@ -45,9 +47,10 @@ class App extends Component {
 		return (
 			<Router history={history}>
 				<React.Fragment>
-					<Nav />
-					{this.props.loading && <LoadingScreen />}
-					<Routes />
+					{/* <Nav /> */}
+					<Home />
+					{/* {this.props.loading && <LoadingScreen />}
+					<Routes /> */}
 				</React.Fragment>
 			</Router>
 		);

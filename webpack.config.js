@@ -1,48 +1,48 @@
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-
-var extractSass = new ExtractTextPlugin({
-    filename: '../css/app.css'
-});
-
-// TODO:
-//      source map
-//      uglifyjs  https://webpack.js.org/plugins/uglifyjs-webpack-plugin/
-//      minify images
-//      BrowserSync
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const LiveReloadPlugin = require('webpack-livereload-plugin');
 
 module.exports = {
-    entry: [
-        './resources/assets/js/index.js',
-        './resources/assets/sass/app.sass'
-    ],
-    devtool: 'source-map',
+	devtool: 'source-map',
+	mode: 'development',
 
-    output: {
-        filename: 'index.js',
-        path: path.resolve(__dirname, 'public/js')
-    },
+	entry: ['./resources/assets/js/index.js', './resources/assets/sass/app.sass'],
 
-    module: {
-        rules: [
-            /* ES6 */
-            {
-                test: /\.js$/,
-                exclude: /(node_modules|bower_components)/,
-                use: {
-                    loader: 'babel-loader'
-                }
-            },
+	output: {
+		filename: 'index.js',
+		path: path.resolve(__dirname, 'public/js')
+	},
 
-            /* SASS */
-            {
-                test: /\.sass$/,
-                use: extractSass.extract({
-                    use: ['css-loader', 'sass-loader']
-                })
-            }
-        ]
-    },
+	module: {
+		rules: [
+			/* ES6 */
+			{
+				test: /\.js$/,
+				exclude: /(node_modules|bower_components)/,
+				use: {
+					loader: 'babel-loader'
+				}
+			},
 
-    plugins: [extractSass]
+			/* SASS */
+			{
+				test: /\.(sa|sc|c)ss$/,
+				use: [
+					MiniCssExtractPlugin.loader,
+					'css-loader', // translates CSS into CommonJS
+					'sass-loader' // compiles Sass to CSS
+				]
+			}
+		]
+	},
+
+	plugins: [
+		new MiniCssExtractPlugin({
+			filename: '../css/app.css'
+		}),
+
+		new LiveReloadPlugin({
+			hostname: '172.17.0.2'
+		})
+	]
 };

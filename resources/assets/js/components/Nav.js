@@ -7,6 +7,10 @@ import namedRoutes from '../routing/namedRoutes';
 const Nav = props => {
 	return (
 		<nav className="nav">
+			<div className="img-wrap">
+				<img src="/images/logo.png" />
+			</div>
+
 			{!props.isAuthenticated ? (
 				<React.Fragment>
 					<Link to={namedRoutes('app.auth.register')}>register</Link>

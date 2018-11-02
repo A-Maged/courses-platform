@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import ReactLoading from 'react-loading';
+import queryString from 'query-string';
 
+import history from '../../redux/history';
 import { selectCourse, getCourse } from '../../redux/actions/actionCreators';
 import namedRoutes from '../../routing/namedRoutes';
 import WithCourse from '../../containers/WithCourse';
@@ -45,7 +47,32 @@ class ShowCourse extends Component {
 		});
 	}
 
+	renderVideoPlayer(videoID) {
+		let allVideos = this.props.videos[this.props.selectedCourse.id];
+
+		if (!allVideos) return;
+
+		let video = allVideos[videoID];
+
+		// !video ? change querystring to the first video in allVideos
+
+		video = video || allVideos[Object.keys(allVideos)[0]];
+
+		return (
+			<div>
+				<video width="320" height="240" controls>
+					<source src={video.url} type="video/mp4" /> Your browser does not support the video tag.
+				</video>
+				<h3>{video.title}</h3>
+				<p>{video.description}</p>
+				<p>{video.updated_at}</p>
+			</div>
+		);
+	}
+
 	render() {
+		let videoID = queryString.parse(history.location.search).video;
+
 		let course = this.props.selectedCourse;
 
 		return !course || Object.keys(course).length === 0 ? (
@@ -54,7 +81,7 @@ class ShowCourse extends Component {
 			<Card header={course.title}>
 				<p>{course.description}</p>
 
-				{/* render video player */}
+				{this.renderVideoPlayer(videoID)}
 
 				{this.renderVideosList()}
 			</Card>

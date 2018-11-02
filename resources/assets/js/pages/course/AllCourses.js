@@ -15,34 +15,29 @@ class AllCourses extends Component {
 
 	render() {
 		return (
-			<div>
-				{this.props.allCourses &&
-					this.props.allCourses.map((course, i) => {
-						return (
-							<div key={i}>
-								<Card header={course.title}>
-									<p>{course.description}</p>
-									<b>{course.duration}</b>
+			this.props.allCourses &&
+			this.props.allCourses.map((course, i) => {
+				return (
+					<React.Fragment key={i}>
+						<Card header={course.title}>
+							<p>{course.description}</p>
+							<b>{course.duration}</b>
 
-									<Link
-										className="btn"
-										to={namedRoutes('app.courses.show', { id: course.id })}
-									>
-										show
-									</Link>
+							<Link className="btn" to={namedRoutes('app.courses.show', { id: course.id })}>
+								show
+							</Link>
 
-									<button
-										className="btn"
-										onClick={this.props.deleteCourse.bind(null, course.id)}
-									>
-										delete
-									</button>
-								</Card>
-								<br />
-							</div>
-						);
-					})}
-			</div>
+							<button
+								className="btn btn-danger"
+								onClick={this.props.deleteCourse.bind(null, course.id)}
+							>
+								delete
+							</button>
+						</Card>
+						<br />
+					</React.Fragment>
+				);
+			})
 		);
 	}
 }
