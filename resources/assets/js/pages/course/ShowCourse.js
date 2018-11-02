@@ -42,7 +42,7 @@ class ShowCourse extends Component {
 
 		return (
 			<ul>
-				{Object.keys(videos).map(key => {
+				{Object.keys(videos).map((key, index) => {
 					const video = videos[key];
 					const videoUrl =
 						namedRoutes('app.courses.show', { id: this.props.selectedCourse.id }) +
@@ -51,7 +51,7 @@ class ShowCourse extends Component {
 
 					return (
 						<li key={Math.random()}>
-							<Link to={videoUrl}>{video.title}</Link>
+							<Link to={videoUrl}>{index + 1 + '. ' + video.title}</Link>
 						</li>
 					);
 				})}
@@ -65,18 +65,17 @@ class ShowCourse extends Component {
 		if (!allVideos) return;
 
 		let video = allVideos[videoID];
+		let videoIndex = Object.keys(allVideos).indexOf(videoID) + 1 || 1;
 
 		// !video ? change querystring to the first video in allVideos
-
 		video = video || allVideos[Object.keys(allVideos)[0]];
-		console.log(video.url);
 
 		return (
 			<div className="video-wrap">
 				<video ref={this.videoElement} controls>
 					<source src={video.url} type="video/mp4" /> Your browser does not support the video tag.
 				</video>
-				<h3 className="title">{video.title}</h3>
+				<h3 className="title">{videoIndex + '. ' + video.title}</h3>
 				{/* <p>{video.description}</p> */}
 				{/* <p>{video.updated_at}</p> */}
 			</div>

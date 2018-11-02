@@ -45553,7 +45553,7 @@ var Login = function (_Component) {
 		key: 'render',
 		value: function render() {
 			return _react2.default.createElement(
-				'div',
+				_react2.default.Fragment,
 				null,
 				this.props.isAuthenticated && _react2.default.createElement(_reactRouterDom.Redirect, { to: (0, _namedRoutes2.default)('app.courses.index') }) || _react2.default.createElement(_LoginForm2.default, this.props)
 			);
@@ -45690,7 +45690,7 @@ var Register = function (_Component) {
 		key: 'render',
 		value: function render() {
 			return _react2.default.createElement(
-				'div',
+				_react2.default.Fragment,
 				null,
 				this.props.isAuthenticated && _react2.default.createElement(_reactRouterDom.Redirect, { to: (0, _namedRoutes2.default)('app.courses.index') }) || _react2.default.createElement(_RegisterForm2.default, null)
 			);
@@ -46119,7 +46119,7 @@ var ShowCourse = function (_Component) {
 			return _react2.default.createElement(
 				'ul',
 				null,
-				Object.keys(videos).map(function (key) {
+				Object.keys(videos).map(function (key, index) {
 					var video = videos[key];
 					var videoUrl = (0, _namedRoutes2.default)('app.courses.show', { id: _this3.props.selectedCourse.id }) + '?video=' + video.id;
 
@@ -46129,7 +46129,7 @@ var ShowCourse = function (_Component) {
 						_react2.default.createElement(
 							_reactRouterDom.Link,
 							{ to: videoUrl },
-							video.title
+							index + 1 + '. ' + video.title
 						)
 					);
 				})
@@ -46143,11 +46143,10 @@ var ShowCourse = function (_Component) {
 			if (!allVideos) return;
 
 			var video = allVideos[videoID];
+			var videoIndex = Object.keys(allVideos).indexOf(videoID) + 1 || 1;
 
 			// !video ? change querystring to the first video in allVideos
-
 			video = video || allVideos[Object.keys(allVideos)[0]];
-			console.log(video.url);
 
 			return _react2.default.createElement(
 				'div',
@@ -46161,7 +46160,7 @@ var ShowCourse = function (_Component) {
 				_react2.default.createElement(
 					'h3',
 					{ className: 'title' },
-					video.title
+					videoIndex + '. ' + video.title
 				)
 			);
 		}
@@ -47379,10 +47378,11 @@ var PrivateRoute = function (_Component) {
 	_createClass(PrivateRoute, [{
 		key: 'componentWillMount',
 		value: function componentWillMount() {
-			console.log(this.props);
+			var intendedUrl = this.props.location.pathname + this.props.location.search;
+			var redirectTo = (0, _namedRoutes2.default)('app.auth.login');
 
 			if (!this.props.isAuthenticated) {
-				this.props.boundRedirect((0, _namedRoutes2.default)('app.auth.login'), this.props.location.pathname + this.props.location.search);
+				this.props.boundRedirect(redirectTo, intendedUrl);
 			}
 		}
 	}, {

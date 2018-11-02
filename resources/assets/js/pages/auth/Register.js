@@ -8,11 +8,11 @@ import RegisterForm from '../../components/RegisterForm';
 class Register extends Component {
 	render() {
 		return (
-			<div>
+			<React.Fragment>
 				{(this.props.isAuthenticated && (
 					<Redirect to={namedRoutes('app.courses.index')} />
 				)) || <RegisterForm />}
-			</div>
+			</React.Fragment>
 		);
 	}
 }

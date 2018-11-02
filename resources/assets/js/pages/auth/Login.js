@@ -9,11 +9,11 @@ import LoginForm from '../../components/LoginForm';
 class Login extends Component {
 	render() {
 		return (
-			<div>
+			<React.Fragment>
 				{(this.props.isAuthenticated && (
 					<Redirect to={namedRoutes('app.courses.index')} />
 				)) || <LoginForm {...this.props} />}
-			</div>
+			</React.Fragment>
 		);
 	}
 }
