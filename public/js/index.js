@@ -44658,10 +44658,6 @@ var _Routes2 = _interopRequireDefault(_Routes);
 
 var _actionTypes = __webpack_require__(/*! ./redux/actions/actionTypes */ "./resources/assets/js/redux/actions/actionTypes.js");
 
-var _Home = __webpack_require__(/*! ./pages/Home */ "./resources/assets/js/pages/Home.js");
-
-var _Home2 = _interopRequireDefault(_Home);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -44693,7 +44689,7 @@ var App = function (_Component) {
 		key: 'componentWillMount',
 		value: function componentWillMount() {
 			this.setState({ initialUrl: _history2.default.location.pathname + _history2.default.location.search });
-			(0, _actionCreators.boundRouteChanged)(_history2.default.location);
+			// boundRouteChanged(history.location);
 		}
 	}, {
 		key: 'componentDidMount',
@@ -44723,7 +44719,16 @@ var App = function (_Component) {
 				_react2.default.createElement(
 					_react2.default.Fragment,
 					null,
-					_react2.default.createElement(_Home2.default, null)
+					_react2.default.createElement(
+						'aside',
+						null,
+						_react2.default.createElement(_Nav2.default, null)
+					),
+					_react2.default.createElement(
+						'main',
+						null,
+						_react2.default.createElement(_Routes2.default, null)
+					)
 				)
 			);
 		}
@@ -45489,78 +45494,6 @@ if (document.getElementById('react-app')) {
 
 /***/ }),
 
-/***/ "./resources/assets/js/pages/Home.js":
-/*!*******************************************!*\
-  !*** ./resources/assets/js/pages/Home.js ***!
-  \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _react2 = _interopRequireDefault(_react);
-
-var _Nav = __webpack_require__(/*! ../components/Nav */ "./resources/assets/js/components/Nav.js");
-
-var _Nav2 = _interopRequireDefault(_Nav);
-
-var _AllCourses = __webpack_require__(/*! ./course/AllCourses */ "./resources/assets/js/pages/course/AllCourses.js");
-
-var _AllCourses2 = _interopRequireDefault(_AllCourses);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Home = function (_Component) {
-	_inherits(Home, _Component);
-
-	function Home() {
-		_classCallCheck(this, Home);
-
-		return _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).apply(this, arguments));
-	}
-
-	_createClass(Home, [{
-		key: 'render',
-		value: function render() {
-			return _react2.default.createElement(
-				'div',
-				{ className: 'page-home' },
-				_react2.default.createElement(
-					'aside',
-					null,
-					_react2.default.createElement(_Nav2.default, null)
-				),
-				_react2.default.createElement(
-					'main',
-					{ className: 'content' },
-					_react2.default.createElement(_AllCourses2.default, null)
-				)
-			);
-		}
-	}]);
-
-	return Home;
-}(_react.Component);
-
-exports.default = Home;
-
-/***/ }),
-
 /***/ "./resources/assets/js/pages/auth/Login.js":
 /*!*************************************************!*\
   !*** ./resources/assets/js/pages/auth/Login.js ***!
@@ -45838,40 +45771,57 @@ var AllCourses = function (_Component) {
 		value: function render() {
 			var _this2 = this;
 
-			return this.props.allCourses && this.props.allCourses.map(function (course, i) {
-				return _react2.default.createElement(
-					_react2.default.Fragment,
-					{ key: i },
-					_react2.default.createElement(
-						_Card2.default,
-						{ header: course.title },
-						_react2.default.createElement(
-							'p',
-							null,
-							course.description
-						),
-						_react2.default.createElement(
-							'b',
-							null,
-							course.duration
-						),
-						_react2.default.createElement(
-							_reactRouterDom.Link,
-							{ className: 'btn', to: (0, _namedRoutes2.default)('app.courses.show', { id: course.id }) },
-							'show'
-						),
-						_react2.default.createElement(
-							'button',
-							{
-								className: 'btn btn-danger',
-								onClick: _this2.props.deleteCourse.bind(null, course.id)
-							},
-							'delete'
-						)
-					),
-					_react2.default.createElement('br', null)
-				);
-			});
+			return _react2.default.createElement(
+				'div',
+				{ className: 'all-courses page' },
+				_react2.default.createElement(
+					'div',
+					{ className: 'page-tile' },
+					'all courses'
+				),
+				_react2.default.createElement(
+					'div',
+					{ className: 'page-content' },
+					this.props.allCourses && this.props.allCourses.length > 0 && this.props.allCourses.map(function (course, i) {
+						return _react2.default.createElement(
+							_react2.default.Fragment,
+							{ key: i },
+							_react2.default.createElement(
+								_Card2.default,
+								{ header: course.title },
+								_react2.default.createElement(
+									'p',
+									null,
+									course.description
+								),
+								_react2.default.createElement(
+									'b',
+									null,
+									course.duration
+								),
+								_react2.default.createElement(
+									_reactRouterDom.Link,
+									{ className: 'btn', to: (0, _namedRoutes2.default)('app.courses.show', { id: course.id }) },
+									'show'
+								),
+								_react2.default.createElement(
+									'button',
+									{
+										className: 'btn btn-danger',
+										onClick: _this2.props.deleteCourse.bind(null, course.id)
+									},
+									'delete'
+								)
+							),
+							_react2.default.createElement('br', null)
+						);
+					}) || _react2.default.createElement(
+						'h2',
+						null,
+						'no courses found'
+					)
+				)
+			);
 		}
 	}]);
 
@@ -46112,9 +46062,17 @@ var ShowCourse = function (_Component) {
 	_inherits(ShowCourse, _Component);
 
 	function ShowCourse() {
+		var _ref;
+
+		var _temp, _this, _ret;
+
 		_classCallCheck(this, ShowCourse);
 
-		return _possibleConstructorReturn(this, (ShowCourse.__proto__ || Object.getPrototypeOf(ShowCourse)).apply(this, arguments));
+		for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+			args[_key] = arguments[_key];
+		}
+
+		return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ShowCourse.__proto__ || Object.getPrototypeOf(ShowCourse)).call.apply(_ref, [this].concat(args))), _this), _this.videoElement = _react2.default.createRef(), _temp), _possibleConstructorReturn(_this, _ret);
 	}
 
 	_createClass(ShowCourse, [{
@@ -46139,24 +46097,43 @@ var ShowCourse = function (_Component) {
 			(0, _actionCreators.selectCourse)('');
 		}
 	}, {
+		key: 'componentDidUpdate',
+		value: function componentDidUpdate() {
+			if (this.videoElement.current) {
+				this.videoElement.current.load();
+			}
+		}
+	}, {
 		key: 'renderVideosList',
 		value: function renderVideosList() {
 			var _this3 = this;
 
 			var videos = this.props.videos[this.props.selectedCourse.id];
 
-			if (!videos || Object.keys(videos).length === 0) return;
+			if (!videos || Object.keys(videos).length === 0) return _react2.default.createElement(
+				'h3',
+				null,
+				'no videos to show'
+			);
 
-			return Object.keys(videos).map(function (key) {
-				var video = videos[key];
-				var videoUrl = (0, _namedRoutes2.default)('app.courses.show', { id: _this3.props.selectedCourse.id }) + '?video=' + video.id;
+			return _react2.default.createElement(
+				'ul',
+				null,
+				Object.keys(videos).map(function (key) {
+					var video = videos[key];
+					var videoUrl = (0, _namedRoutes2.default)('app.courses.show', { id: _this3.props.selectedCourse.id }) + '?video=' + video.id;
 
-				return _react2.default.createElement(
-					_reactRouterDom.Link,
-					{ to: videoUrl, key: Math.random() },
-					_react2.default.createElement(_Card2.default, { header: video.title })
-				);
-			});
+					return _react2.default.createElement(
+						'li',
+						{ key: Math.random() },
+						_react2.default.createElement(
+							_reactRouterDom.Link,
+							{ to: videoUrl },
+							video.title
+						)
+					);
+				})
+			);
 		}
 	}, {
 		key: 'renderVideoPlayer',
@@ -46170,30 +46147,21 @@ var ShowCourse = function (_Component) {
 			// !video ? change querystring to the first video in allVideos
 
 			video = video || allVideos[Object.keys(allVideos)[0]];
+			console.log(video.url);
 
 			return _react2.default.createElement(
 				'div',
-				null,
+				{ className: 'video-wrap' },
 				_react2.default.createElement(
 					'video',
-					{ width: '320', height: '240', controls: true },
+					{ ref: this.videoElement, controls: true },
 					_react2.default.createElement('source', { src: video.url, type: 'video/mp4' }),
 					' Your browser does not support the video tag.'
 				),
 				_react2.default.createElement(
 					'h3',
-					null,
+					{ className: 'title' },
 					video.title
-				),
-				_react2.default.createElement(
-					'p',
-					null,
-					video.description
-				),
-				_react2.default.createElement(
-					'p',
-					null,
-					video.updated_at
 				)
 			);
 		}
@@ -46205,15 +46173,24 @@ var ShowCourse = function (_Component) {
 			var course = this.props.selectedCourse;
 
 			return !course || Object.keys(course).length === 0 ? _react2.default.createElement(_LoadingSpinner2.default, null) : _react2.default.createElement(
-				_Card2.default,
-				{ header: course.title },
+				'div',
+				{ className: 'current-course page' },
 				_react2.default.createElement(
-					'p',
-					null,
-					course.description
+					'div',
+					{ className: 'page-tile' },
+					course.title
 				),
-				this.renderVideoPlayer(videoID),
-				this.renderVideosList()
+				_react2.default.createElement(
+					'div',
+					{ className: 'page-content' },
+					this.renderVideoPlayer(videoID),
+					_react2.default.createElement(
+						'p',
+						null,
+						course.description
+					),
+					this.renderVideosList()
+				)
 			);
 		}
 	}]);
@@ -47402,8 +47379,10 @@ var PrivateRoute = function (_Component) {
 	_createClass(PrivateRoute, [{
 		key: 'componentWillMount',
 		value: function componentWillMount() {
+			console.log(this.props);
+
 			if (!this.props.isAuthenticated) {
-				this.props.boundRedirect((0, _namedRoutes2.default)('app.auth.login'), this.props.path);
+				this.props.boundRedirect((0, _namedRoutes2.default)('app.auth.login'), this.props.location.pathname + this.props.location.search);
 			}
 		}
 	}, {

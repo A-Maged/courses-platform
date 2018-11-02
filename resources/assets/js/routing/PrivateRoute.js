@@ -7,8 +7,13 @@ import namedRoutes from './namedRoutes';
 
 class PrivateRoute extends Component {
 	componentWillMount() {
+		console.log(this.props);
+
 		if (!this.props.isAuthenticated) {
-			this.props.boundRedirect(namedRoutes('app.auth.login'), this.props.path);
+			this.props.boundRedirect(
+				namedRoutes('app.auth.login'),
+				this.props.location.pathname + this.props.location.search
+			);
 		}
 	}
 
@@ -28,7 +33,6 @@ export default connect(
 		isAuthenticated: state.auth.isAuthenticated
 	}),
 	dispatch => ({
-		boundRedirect: (path, intendedUrl) =>
-			actionCreators.boundRedirect(path, intendedUrl)
+		boundRedirect: (path, intendedUrl) => actionCreators.boundRedirect(path, intendedUrl)
 	})
 )(PrivateRoute);

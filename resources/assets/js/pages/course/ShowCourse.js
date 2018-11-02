@@ -11,6 +11,8 @@ import Card from '../../components/Card';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
 class ShowCourse extends Component {
+	videoElement = React.createRef();
+
 	componentWillMount() {
 		selectCourse('');
 	}
@@ -27,24 +29,34 @@ class ShowCourse extends Component {
 		selectCourse('');
 	}
 
+	componentDidUpdate() {
+		if (this.videoElement.current) {
+			this.videoElement.current.load();
+		}
+	}
+
 	renderVideosList() {
 		let videos = this.props.videos[this.props.selectedCourse.id];
 
-		if (!videos || Object.keys(videos).length === 0) return;
+		if (!videos || Object.keys(videos).length === 0) return <h3>no videos to show</h3>;
 
-		return Object.keys(videos).map(key => {
-			const video = videos[key];
-			const videoUrl =
-				namedRoutes('app.courses.show', { id: this.props.selectedCourse.id }) +
-				'?video=' +
-				video.id;
+		return (
+			<ul>
+				{Object.keys(videos).map(key => {
+					const video = videos[key];
+					const videoUrl =
+						namedRoutes('app.courses.show', { id: this.props.selectedCourse.id }) +
+						'?video=' +
+						video.id;
 
-			return (
-				<Link to={videoUrl} key={Math.random()}>
-					<Card header={video.title}>{/*video.description*/}</Card>
-				</Link>
-			);
-		});
+					return (
+						<li key={Math.random()}>
+							<Link to={videoUrl}>{video.title}</Link>
+						</li>
+					);
+				})}
+			</ul>
+		);
 	}
 
 	renderVideoPlayer(videoID) {
@@ -57,15 +69,16 @@ class ShowCourse extends Component {
 		// !video ? change querystring to the first video in allVideos
 
 		video = video || allVideos[Object.keys(allVideos)[0]];
+		console.log(video.url);
 
 		return (
-			<div>
-				<video width="320" height="240" controls>
+			<div className="video-wrap">
+				<video ref={this.videoElement} controls>
 					<source src={video.url} type="video/mp4" /> Your browser does not support the video tag.
 				</video>
-				<h3>{video.title}</h3>
-				<p>{video.description}</p>
-				<p>{video.updated_at}</p>
+				<h3 className="title">{video.title}</h3>
+				{/* <p>{video.description}</p> */}
+				{/* <p>{video.updated_at}</p> */}
 			</div>
 		);
 	}
@@ -78,13 +91,14 @@ class ShowCourse extends Component {
 		return !course || Object.keys(course).length === 0 ? (
 			<LoadingSpinner />
 		) : (
-			<Card header={course.title}>
-				<p>{course.description}</p>
-
-				{this.renderVideoPlayer(videoID)}
-
-				{this.renderVideosList()}
-			</Card>
+			<div className="current-course page">
+				<div className="page-tile">{course.title}</div>
+				<div className="page-content">
+					{this.renderVideoPlayer(videoID)}
+					<p>{course.description}</p>
+					{this.renderVideosList()}
+				</div>
+			</div>
 		);
 	}
 }

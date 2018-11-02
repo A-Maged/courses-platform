@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use \App\Course;
+use \App\Video;
 
 class CoursesController extends Controller
 {
@@ -106,12 +107,12 @@ class CoursesController extends Controller
      */
     public function destroy($id)
     {
-        $course = Course::find($id);
-        $course->forceDelete();
+        Course::find($id)->forceDelete();
+		Video::where('course_id', $id)->forceDelete();
 
         return response()->json([
             'status' => 'success',
-            'msg' => 'course deleted permanently',
+            'msg' => 'the course and its videos are deleted permanently',
         ]);
     }
 }

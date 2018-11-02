@@ -15,8 +15,6 @@ import Nav from './components/Nav';
 import Routes from './routing/Routes';
 import { LOADING } from './redux/actions/actionTypes';
 
-import Home from './pages/Home';
-
 class App extends Component {
 	state = {
 		initialUrl: ''
@@ -24,7 +22,7 @@ class App extends Component {
 
 	componentWillMount() {
 		this.setState({ initialUrl: history.location.pathname + history.location.search });
-		boundRouteChanged(history.location);
+		// boundRouteChanged(history.location);
 	}
 
 	componentDidMount() {
@@ -47,10 +45,13 @@ class App extends Component {
 		return (
 			<Router history={history}>
 				<React.Fragment>
-					{/* <Nav /> */}
-					<Home />
-					{/* {this.props.loading && <LoadingScreen />}
-					<Routes /> */}
+					{/* {this.props.loading && <LoadingScreen />} */}
+					<aside>
+						<Nav />
+					</aside>
+					<main>
+						<Routes />
+					</main>
 				</React.Fragment>
 			</Router>
 		);
