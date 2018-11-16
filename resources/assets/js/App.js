@@ -45,7 +45,7 @@ class App extends Component {
 		return (
 			<Router history={history}>
 				<React.Fragment>
-					{/* {this.props.loading && <LoadingScreen />} */}
+					{this.props.loading && <LoadingScreen />}
 					<aside>
 						<Nav />
 					</aside>

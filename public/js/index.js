@@ -44719,6 +44719,7 @@ var App = function (_Component) {
 				_react2.default.createElement(
 					_react2.default.Fragment,
 					null,
+					this.props.loading && _react2.default.createElement(_LoadingScreen2.default, null),
 					_react2.default.createElement(
 						'aside',
 						null,
@@ -44798,7 +44799,7 @@ exports.default = Card;
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+	value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -44813,6 +44814,10 @@ var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 
+var _LoadingSpinner = __webpack_require__(/*! ./LoadingSpinner */ "./resources/assets/js/components/LoadingSpinner.js");
+
+var _LoadingSpinner2 = _interopRequireDefault(_LoadingSpinner);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -44822,48 +44827,44 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var LoadingScreen = function (_Component) {
-  _inherits(LoadingScreen, _Component);
+	_inherits(LoadingScreen, _Component);
 
-  function LoadingScreen(props) {
-    _classCallCheck(this, LoadingScreen);
+	function LoadingScreen(props) {
+		_classCallCheck(this, LoadingScreen);
 
-    var _this = _possibleConstructorReturn(this, (LoadingScreen.__proto__ || Object.getPrototypeOf(LoadingScreen)).call(this, props));
+		var _this = _possibleConstructorReturn(this, (LoadingScreen.__proto__ || Object.getPrototypeOf(LoadingScreen)).call(this, props));
 
-    _this.overlayNode = document.createElement('div');
-    _this.overlayNode.setAttribute('id', 'loading-screen-overlay');
-    return _this;
-  }
+		_this.overlayNode = document.createElement('div');
+		_this.overlayNode.setAttribute('id', 'loading-screen-overlay');
+		return _this;
+	}
 
-  _createClass(LoadingScreen, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      // add overlay div at the end of <body>
-      document.body.appendChild(this.overlayNode);
-    }
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      // remove overlay div from the dom
-      document.body.removeChild(this.overlayNode);
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return _reactDom2.default.createPortal(_react2.default.createElement(
-        'h1',
-        null,
-        'loading'
-      ), this.overlayNode);
-    }
-  }]);
+	_createClass(LoadingScreen, [{
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			// add overlay div at the end of <body>
+			document.body.appendChild(this.overlayNode);
+		}
+	}, {
+		key: 'componentWillUnmount',
+		value: function componentWillUnmount() {
+			// remove overlay div from the dom
+			document.body.removeChild(this.overlayNode);
+		}
+	}, {
+		key: 'render',
+		value: function render() {
+			return _reactDom2.default.createPortal(_react2.default.createElement(_LoadingSpinner2.default, null), this.overlayNode);
+		}
+	}]);
 
-  return LoadingScreen;
+	return LoadingScreen;
 }(_react.Component);
 
 exports.default = (0, _reactRedux.connect)(function (state) {
-  return {
-    loading: state.ui.loading
-  };
+	return {
+		loading: state.ui.loading
+	};
 })(LoadingScreen);
 
 /***/ }),
@@ -44893,7 +44894,17 @@ var _reactLoading2 = _interopRequireDefault(_reactLoading);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = function () {
-	return _react2.default.createElement(_reactLoading2.default, { type: 'spin', color: 'blue', height: '20%', width: '20%' });
+	return _react2.default.createElement(
+		'div',
+		{
+			style: {
+				position: 'relative',
+				minWidth: '100%',
+				minHeight: '100%'
+			}
+		},
+		_react2.default.createElement(_reactLoading2.default, { className: 'loading-spinner', type: 'spin', color: 'blue' })
+	);
 };
 
 /***/ }),
