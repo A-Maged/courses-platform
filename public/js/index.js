@@ -46172,6 +46172,11 @@ var ShowCourse = function (_Component) {
 					'h3',
 					{ className: 'title' },
 					videoIndex + '. ' + video.title
+				),
+				_react2.default.createElement(
+					'p',
+					null,
+					video.description
 				)
 			);
 		}
@@ -46194,11 +46199,6 @@ var ShowCourse = function (_Component) {
 					'div',
 					{ className: 'page-content' },
 					this.renderVideoPlayer(videoID),
-					_react2.default.createElement(
-						'p',
-						null,
-						course.description
-					),
 					this.renderVideosList()
 				)
 			);
@@ -47274,7 +47274,8 @@ var uiReducer = function uiReducer() {
 	switch (action.type) {
 		case actionTypes.LOADING:
 			return _extends({}, state, {
-				loading: action.value || !state.loading
+				// loading: action.value || !state.loading
+				loading: typeof action.value == 'boolean' ? action.value : !state.loading
 			});
 
 		default:

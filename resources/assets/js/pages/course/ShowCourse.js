@@ -73,10 +73,11 @@ class ShowCourse extends Component {
 		return (
 			<div className="video-wrap">
 				<video ref={this.videoElement} controls>
-					<source src={video.url} type="video/mp4" /> Your browser does not support the video tag.
+					<source src={video.url} type="video/mp4" /> Your browser does not support the
+					video tag.
 				</video>
 				<h3 className="title">{videoIndex + '. ' + video.title}</h3>
-				{/* <p>{video.description}</p> */}
+				<p>{video.description}</p>
 				{/* <p>{video.updated_at}</p> */}
 			</div>
 		);
@@ -94,7 +95,6 @@ class ShowCourse extends Component {
 				<div className="page-tile">{course.title}</div>
 				<div className="page-content">
 					{this.renderVideoPlayer(videoID)}
-					<p>{course.description}</p>
 					{this.renderVideosList()}
 				</div>
 			</div>

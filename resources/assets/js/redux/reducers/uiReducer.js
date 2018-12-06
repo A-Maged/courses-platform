@@ -10,7 +10,8 @@ const uiReducer = (state = initialState, action) => {
 		case actionTypes.LOADING:
 			return {
 				...state,
-				loading: action.value || !state.loading
+				// loading: action.value || !state.loading
+				loading: typeof action.value == 'boolean' ? action.value : !state.loading
 			};
 
 		default:
