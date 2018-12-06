@@ -23,7 +23,8 @@ class CoursesController extends Controller
     public function index()
     {
         //  NOTE: add pagination
-        $courses = Course::all();
+		$courses = Course::where('publishedStatus', 'published')->get();
+		
         return response()->json([
             'status' => 'success',
             'data' => $courses,
