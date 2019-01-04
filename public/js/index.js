@@ -44903,7 +44903,7 @@ exports.default = function () {
 				minHeight: '100%'
 			}
 		},
-		_react2.default.createElement(_reactLoading2.default, { className: 'loading-spinner', type: 'spin', color: 'blue' })
+		_react2.default.createElement(_reactLoading2.default, { className: 'loading-spinner', type: 'spin', color: 'black' })
 	);
 };
 
