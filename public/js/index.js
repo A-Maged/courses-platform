@@ -45413,7 +45413,8 @@ var mapStateToProps = function mapStateToProps(state) {
 	return {
 		allCourses: state.course.allCourses,
 		selectedCourse: state.course.selectedCourse,
-		videos: state.course.videos
+		videos: state.course.videos,
+		videoUploadProgress: state.course.videoUploadProgress
 	};
 };
 
@@ -46392,7 +46393,8 @@ var VideoForm = function (_Component) {
 		value: function render() {
 			var _props = this.props,
 			    handleSubmit = _props.handleSubmit,
-			    allCourses = _props.allCourses;
+			    allCourses = _props.allCourses,
+			    videoUploadProgress = _props.videoUploadProgress;
 
 
 			return _react2.default.createElement(
@@ -46488,6 +46490,27 @@ var VideoForm = function (_Component) {
 						'button',
 						{ type: 'submit', className: 'btn btn-primary' },
 						'Submit'
+					),
+					videoUploadProgress > 0 && _react2.default.createElement(
+						'div',
+						null,
+						_react2.default.createElement('br', null),
+						_react2.default.createElement(
+							'div',
+							{ className: 'progress' },
+							_react2.default.createElement(
+								'div',
+								{
+									className: 'progress-bar',
+									style: { width: videoUploadProgress + '%' }
+								},
+								_react2.default.createElement(
+									'span',
+									{ className: 'sr-only' },
+									'70% Complete'
+								)
+							)
+						)
 					)
 				)
 			);
@@ -46589,6 +46612,7 @@ var DELETE_COURSE = exports.DELETE_COURSE = '[ COURSE ] DELETE_COURSE';
 var SELECT_COURSE = exports.SELECT_COURSE = '[ COURSE ] SELECT_COURSE';
 var COURSE_VIDEOS = exports.COURSE_VIDEOS = '[ COURSE ] COURSE_VIDEOS';
 var VIDEO_DATA = exports.VIDEO_DATA = '[ COURSE ] VIDEO_DATA';
+var VIDEO_UPLOAD_PROGRESS = exports.VIDEO_UPLOAD_PROGRESS = '[ COURSE ] VIDEO_UPLOAD_PROGRESS';
 
 var AUTH_REQUEST_SUCCESS = exports.AUTH_REQUEST_SUCCESS = '[ AUTH ] AUTH_REQUEST_SUCCESS';
 
@@ -46746,7 +46770,7 @@ var authRequestSuccess = exports.authRequestSuccess = function authRequestSucces
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.createVideo = exports.selectCourse = exports.deleteCourse = exports.createCourse = exports.getVideo = exports.getCourse = exports.getAllCourses = undefined;
+exports.createVideo = exports.updateVideoUploadProgress = exports.selectCourse = exports.deleteCourse = exports.createCourse = exports.getVideo = exports.getCourse = exports.getAllCourses = undefined;
 
 var _axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 
@@ -46836,7 +46860,23 @@ var selectCourse = exports.selectCourse = function selectCourse(id) {
 	});
 };
 
+var updateVideoUploadProgress = exports.updateVideoUploadProgress = function updateVideoUploadProgress(value) {
+	(0, _store.dispatch)({
+		type: actionTypes.VIDEO_UPLOAD_PROGRESS,
+		value: value
+	});
+};
+
 var createVideo = exports.createVideo = function createVideo(data, fileSelector) {
+	var url = (0, _namedRoutes2.default)('server.videos.store');
+	var requestConfig = {
+		onUploadProgress: function onUploadProgress(progressEvent) {
+			var percentage = progressEvent.loaded / progressEvent.total * 100;
+			updateVideoUploadProgress(percentage);
+			console.log(percentage);
+		}
+	};
+
 	var formData = new FormData();
 
 	for (var key in data) {
@@ -46845,7 +46885,7 @@ var createVideo = exports.createVideo = function createVideo(data, fileSelector)
 	formData.append('video_file', document.querySelector(fileSelector).files[0]);
 
 	return function (dispatch, getState) {
-		return _axios2.default.post((0, _namedRoutes2.default)('server.videos.store'), formData).then(function (response) {
+		return _axios2.default.post(url, formData, requestConfig).then(function (response) {
 			console.log(response.data);
 
 			// redirect
@@ -47088,7 +47128,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var initialState = {
 	allCourses: [],
 	selectedCourse: {},
-	videos: []
+	videos: [],
+	videoUploadProgress: 0
 };
 
 var courseReducer = function courseReducer() {
@@ -47096,6 +47137,11 @@ var courseReducer = function courseReducer() {
 	var action = arguments[1];
 
 	switch (action.type) {
+		case actionTypes.VIDEO_UPLOAD_PROGRESS:
+			return _extends({}, state, {
+				videoUploadProgress: action.value
+			});
+
 		case actionTypes.GET_ALL_COURSES:
 			return _extends({}, state, {
 				allCourses: action.allCourses

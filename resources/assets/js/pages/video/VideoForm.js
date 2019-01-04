@@ -17,7 +17,7 @@ class VideoForm extends Component {
 	}
 
 	render() {
-		const { handleSubmit, allCourses } = this.props;
+		const { handleSubmit, allCourses, videoUploadProgress } = this.props;
 
 		return (
 			<Card header="create video">
@@ -67,17 +67,19 @@ class VideoForm extends Component {
 						Submit
 					</button>
 
-					<div>
-						<br />
-						<div className="progress">
-							<div
-								className="progress-bar"
-								style={{ width: this.props.videoUploadProgress + '%' }}
-							>
-								<span className="sr-only">70% Complete</span>
+					{videoUploadProgress > 0 && (
+						<div>
+							<br />
+							<div className="progress">
+								<div
+									className="progress-bar"
+									style={{ width: videoUploadProgress + '%' }}
+								>
+									<span className="sr-only">70% Complete</span>
+								</div>
 							</div>
 						</div>
-					</div>
+					)}
 				</form>
 			</Card>
 		);
