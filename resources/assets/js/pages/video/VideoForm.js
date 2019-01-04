@@ -66,6 +66,18 @@ class VideoForm extends Component {
 					<button type="submit" className="btn btn-primary">
 						Submit
 					</button>
+
+					<div>
+						<br />
+						<div className="progress">
+							<div
+								className="progress-bar"
+								style={{ width: this.props.videoUploadProgress + '%' }}
+							>
+								<span className="sr-only">70% Complete</span>
+							</div>
+						</div>
+					</div>
 				</form>
 			</Card>
 		);

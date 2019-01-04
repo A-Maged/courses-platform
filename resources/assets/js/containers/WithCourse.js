@@ -16,7 +16,8 @@ const mapStateToProps = state => {
 	return {
 		allCourses: state.course.allCourses,
 		selectedCourse: state.course.selectedCourse,
-		videos: state.course.videos
+		videos: state.course.videos,
+		videoUploadProgress: state.course.videoUploadProgress
 	};
 };
 

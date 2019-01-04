@@ -73,7 +73,23 @@ export const selectCourse = id => {
 	});
 };
 
+export const updateVideoUploadProgress = value => {
+	dispatch({
+		type: actionTypes.VIDEO_UPLOAD_PROGRESS,
+		value
+	});
+};
+
 export const createVideo = (data, fileSelector) => {
+	const url = namedRoutes('server.videos.store');
+	const requestConfig = {
+		onUploadProgress: progressEvent => {
+			let percentage = (progressEvent.loaded / progressEvent.total) * 100;
+			updateVideoUploadProgress(percentage);
+			console.log(percentage);
+		}
+	};
+
 	let formData = new FormData();
 
 	for (var key in data) {
@@ -82,7 +98,7 @@ export const createVideo = (data, fileSelector) => {
 	formData.append('video_file', document.querySelector(fileSelector).files[0]);
 
 	return (dispatch, getState) => {
-		return axios.post(namedRoutes('server.videos.store'), formData).then(response => {
+		return axios.post(url, formData, requestConfig).then(response => {
 			console.log(response.data);
 
 			// redirect

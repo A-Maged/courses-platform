@@ -3,11 +3,18 @@ import * as actionTypes from '../actions/actionTypes';
 const initialState = {
 	allCourses: [],
 	selectedCourse: {},
-	videos: []
+	videos: [],
+	videoUploadProgress: 0
 };
 
 const courseReducer = (state = initialState, action) => {
 	switch (action.type) {
+		case actionTypes.VIDEO_UPLOAD_PROGRESS:
+			return {
+				...state,
+				videoUploadProgress: action.value
+			};
+
 		case actionTypes.GET_ALL_COURSES:
 			return {
 				...state,
@@ -23,9 +30,7 @@ const courseReducer = (state = initialState, action) => {
 		case actionTypes.SELECT_COURSE:
 			return {
 				...state,
-				selectedCourse: state.allCourses.filter(
-					course => action.id == course.id
-				)[0]
+				selectedCourse: state.allCourses.filter(course => action.id == course.id)[0]
 			};
 
 		case actionTypes.COURSE_VIDEOS:
