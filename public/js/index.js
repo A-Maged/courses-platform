@@ -46888,6 +46888,9 @@ var createVideo = exports.createVideo = function createVideo(data, fileSelector)
 		return _axios2.default.post(url, formData, requestConfig).then(function (response) {
 			console.log(response.data);
 
+			//reset progress-bar
+			updateVideoUploadProgress(0);
+
 			// redirect
 			(0, _uiActionCreators.boundRedirect)((0, _namedRoutes2.default)('app.courses.index'));
 		});

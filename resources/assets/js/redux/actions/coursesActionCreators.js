@@ -101,6 +101,9 @@ export const createVideo = (data, fileSelector) => {
 		return axios.post(url, formData, requestConfig).then(response => {
 			console.log(response.data);
 
+			//reset progress-bar
+			updateVideoUploadProgress(0);
+
 			// redirect
 			boundRedirect(namedRoutes('app.courses.index'));
 		});
