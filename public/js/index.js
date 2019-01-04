@@ -47207,6 +47207,10 @@ var _redux = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js"
 
 var _reduxForm = __webpack_require__(/*! redux-form */ "./node_modules/redux-form/es/index.js");
 
+var _actionTypes = __webpack_require__(/*! ../actions/actionTypes */ "./resources/assets/js/redux/actions/actionTypes.js");
+
+var actionTypes = _interopRequireWildcard(_actionTypes);
+
 var _authReducer = __webpack_require__(/*! ./authReducer */ "./resources/assets/js/redux/reducers/authReducer.js");
 
 var _authReducer2 = _interopRequireDefault(_authReducer);
@@ -47225,13 +47229,23 @@ var _routingReducer2 = _interopRequireDefault(_routingReducer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var rootReducer = (0, _redux.combineReducers)({
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var appReducer = (0, _redux.combineReducers)({
 	auth: _authReducer2.default,
 	ui: _uiReducer2.default,
 	course: _courseReducer2.default,
 	form: _reduxForm.reducer,
 	routing: _routingReducer2.default
 });
+
+var rootReducer = function rootReducer(state, action) {
+	// resets all state when logging out
+	if (action.type === actionTypes.AUTH_LOGOUT_REQUEST) {
+		state = undefined;
+	}
+	return appReducer(state, action);
+};
 
 exports.default = rootReducer;
 
