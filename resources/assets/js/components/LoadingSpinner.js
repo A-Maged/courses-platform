@@ -9,6 +9,6 @@ export default () => (
 			minHeight: '100%'
 		}}
 	>
-		<ReactLoading className="loading-spinner" type={'spin'} color={'blue'} />
+		<ReactLoading className="loading-spinner" type={'spin'} color={'black'} />
 	</div>
 );
